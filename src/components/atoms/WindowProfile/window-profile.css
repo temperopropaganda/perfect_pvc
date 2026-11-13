@@ -1,0 +1,203 @@
+@layer components {
+  .window-profile {
+    --wpf-mm: var(--mm, 0.25px);
+    --wpf-t: 12px;
+    --wpf-hair: max(1px, calc(var(--wpf-mm) * 2.5));
+
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* Cada camada fica um pouco à frente da anterior e projeta sombra de contato nela. */
+  .window-profile[data-tier="frame"] {
+    --wpf-t: var(--frame-face, 16px);
+
+    filter: drop-shadow(
+      0 calc(var(--wpf-mm) * 5) calc(var(--wpf-mm) * 8)
+        color-mix(in oklab, var(--scene-shadow) 24%, transparent)
+    );
+  }
+
+  .window-profile[data-tier="track"] {
+    --wpf-t: var(--track-face, 4px);
+  }
+
+  .window-profile[data-tier="sash"] {
+    --wpf-t: var(--sash-face, 16px);
+
+    filter: drop-shadow(
+      calc(var(--wpf-mm) * 2.5) calc(var(--wpf-mm) * 4.5) calc(var(--wpf-mm) * 4)
+        color-mix(in oklab, var(--scene-shadow) 34%, transparent)
+    );
+  }
+
+  .window-profile[data-tier="bead"] {
+    --wpf-t: var(--bead-face, 6px);
+
+    filter: drop-shadow(
+      calc(var(--wpf-mm) * 1.2) calc(var(--wpf-mm) * 2.2) calc(var(--wpf-mm) * 2.5)
+        color-mix(in oklab, var(--scene-shadow) 30%, transparent)
+    );
+  }
+
+  /* Base contínua sob as barras: esconde a fresta de antialias na meia-esquadria. */
+  .window-profile::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: var(--wpf-t) solid var(--finish-base);
+  }
+
+  .wpf-bar {
+    --wpf-tone: transparent;
+
+    position: absolute;
+    overflow: hidden;
+    background-color: var(--finish-base);
+    background-image: linear-gradient(var(--wpf-tone), var(--wpf-tone)), var(--wpf-shading, none);
+  }
+
+  .wpf-bar[data-side="top"] {
+    --wpf-dir: to bottom;
+
+    top: 0;
+    right: 0;
+    left: 0;
+    height: var(--wpf-t);
+    clip-path: polygon(0 0, 100% 0, calc(100% - var(--wpf-t)) 100%, var(--wpf-t) 100%);
+  }
+
+  .wpf-bar[data-side="bottom"] {
+    --wpf-dir: to bottom;
+
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: var(--wpf-t);
+    clip-path: polygon(var(--wpf-t) 0, calc(100% - var(--wpf-t)) 0, 100% 100%, 0 100%);
+  }
+
+  .wpf-bar[data-side="left"] {
+    --wpf-dir: to right;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--wpf-t);
+    clip-path: polygon(0 0, 100% var(--wpf-t), 100% calc(100% - var(--wpf-t)), 0 100%);
+  }
+
+  .wpf-bar[data-side="right"] {
+    --wpf-dir: to right;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--wpf-t);
+    clip-path: polygon(0 var(--wpf-t), 100% 0, 100% 100%, 0 calc(100% - var(--wpf-t)));
+  }
+
+  /*
+    Sombreamento da seção do perfil no sentido da tela (luz do alto à esquerda): a aresta de
+    cima e a da esquerda pegam luz, as de baixo e da direita ficam na sombra. Funciona para os
+    quatro lados porque a face voltada para fora no topo e a voltada para dentro na base
+    olham ambas para cima.
+  */
+  .window-profile[data-tier="frame"] > .wpf-bar {
+    --wpf-shading: linear-gradient(
+      var(--wpf-dir),
+      var(--finish-edge) 0,
+      var(--finish-light) 9%,
+      var(--finish-base) 27%,
+      var(--finish-base) 66%,
+      var(--finish-shade) 86%,
+      var(--finish-deep) 100%
+    );
+  }
+
+  .window-profile[data-tier="track"] > .wpf-bar {
+    --wpf-shading: linear-gradient(
+      var(--wpf-dir),
+      var(--finish-shade) 0,
+      var(--finish-deep) 40%,
+      var(--finish-deep) 70%,
+      var(--finish-shade) 100%
+    );
+  }
+
+  /* Folha: a fresta escura com o marco, a aresta arredondada e a junta com o baguete. */
+  .window-profile[data-tier="sash"] > .wpf-bar {
+    --wpf-shading: linear-gradient(
+      var(--wpf-dir),
+      var(--finish-deep) 0,
+      var(--finish-deep) var(--wpf-hair),
+      var(--finish-edge) var(--wpf-hair),
+      var(--finish-light) 15%,
+      var(--finish-base) 34%,
+      var(--finish-base) 64%,
+      var(--finish-shade) 85%,
+      var(--finish-deep) calc(100% - var(--wpf-hair)),
+      var(--finish-deep) 100%
+    );
+  }
+
+  /* Baguete: rebaixado em relação à folha; recebe a sombra do lábio no alto e à esquerda. */
+  .window-profile[data-tier="bead"] > .wpf-bar {
+    --wpf-shading: linear-gradient(
+      var(--wpf-dir),
+      var(--finish-light) 0,
+      var(--finish-base) 50%,
+      var(--finish-shade) 100%
+    );
+  }
+
+  .window-profile[data-tier="bead"] > .wpf-bar:is([data-side="top"], [data-side="left"]) {
+    --wpf-tone: color-mix(in oklab, var(--scene-shadow) 16%, transparent);
+  }
+
+  .window-profile[data-tier="bead"] > .wpf-bar:is([data-side="bottom"], [data-side="right"]) {
+    --wpf-tone: color-mix(in oklab, var(--scene-light) 18%, transparent);
+  }
+
+  .wpf-bar::before,
+  .wpf-bar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* Brilho mineral e metálico (pirita, bronze, cinza). */
+  .wpf-bar::before {
+    background-color: var(--finish-edge);
+    opacity: var(--finish-sparkle, 0);
+    -webkit-mask: var(--texture-sparkle) 0 0 / calc(var(--wpf-mm) * 300) calc(var(--wpf-mm) * 300);
+    mask: var(--texture-sparkle) 0 0 / calc(var(--wpf-mm) * 300) calc(var(--wpf-mm) * 300);
+  }
+
+  /* Veio de madeira: corre no sentido do comprimento de cada barra, como no foil real. */
+  .wpf-bar::after {
+    background-color: var(--finish-deep);
+    opacity: var(--finish-grain, 0);
+    -webkit-mask: var(--texture-grain-h) var(--wpf-grain-offset, 0 0) / calc(var(--wpf-mm) * 1400)
+      calc(var(--wpf-mm) * 280);
+    mask: var(--texture-grain-h) var(--wpf-grain-offset, 0 0) / calc(var(--wpf-mm) * 1400)
+      calc(var(--wpf-mm) * 280);
+  }
+
+  .wpf-bar:is([data-side="left"], [data-side="right"])::after {
+    -webkit-mask: var(--texture-grain-v) var(--wpf-grain-offset, 0 0) / calc(var(--wpf-mm) * 280)
+      calc(var(--wpf-mm) * 1400);
+    mask: var(--texture-grain-v) var(--wpf-grain-offset, 0 0) / calc(var(--wpf-mm) * 280)
+      calc(var(--wpf-mm) * 1400);
+  }
+
+  .wpf-bar[data-side="bottom"] {
+    --wpf-grain-offset: calc(var(--wpf-mm) * -520) calc(var(--wpf-mm) * -90);
+  }
+
+  .wpf-bar[data-side="right"] {
+    --wpf-grain-offset: calc(var(--wpf-mm) * -110) calc(var(--wpf-mm) * -640);
+  }
+}

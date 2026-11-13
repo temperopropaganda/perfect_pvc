@@ -1,0 +1,425 @@
+/* Vão em milímetros: animar o número (e não a largura) faz só a troca de sistema animar. */
+@property --win-w {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1000;
+}
+
+@property --win-h {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1000;
+}
+
+@layer components {
+  .window-preview {
+    /* Escala única: 1400 mm (o vão do correr, o mais largo) ocupam 78% do lado menor. */
+    --mm: calc(78cqmin / 1400);
+
+    /* Faces aparentes dos perfis, próximas de um sistema de PVC de 70 mm. */
+    --frame-face: calc(var(--mm) * 58);
+    --track-face: calc(var(--mm) * 14);
+    --sash-face: calc(var(--mm) * 56);
+    --bead-face: calc(var(--mm) * 20);
+    --sash-depth: calc(var(--mm) * 76);
+    --meeting: calc(var(--mm) * 44);
+
+    /* Requadro visto quase de frente, com o olho um pouco acima do centro da janela. */
+    --reveal-top: calc(var(--mm) * 30);
+    --reveal-side: calc(var(--mm) * 44);
+    --reveal-bottom: calc(var(--mm) * 60);
+
+    /* Centro vertical da janela, em % da cena (sem unidade para servir a % e a cqh). */
+    --window-y: 41;
+
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    container-type: size;
+
+    /* A troca de acabamento interpola as cores registradas em tokens.css. */
+    transition-property:
+      --finish-base, --finish-light, --finish-shade, --finish-deep, --finish-edge,
+      --finish-hardware, --finish-gasket, --finish-grain, --finish-sparkle;
+    transition-duration: 650ms;
+    transition-timing-function: var(--ease-soft);
+  }
+
+  /* Parede clara com luz ambiente vinda do alto à esquerda e reboco quase imperceptível. */
+  .wp-wall {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(120% 90% at 22% 6%, var(--scene-wall-lit) 0%, transparent 62%),
+      linear-gradient(
+        180deg,
+        var(--scene-wall) 0%,
+        var(--scene-wall) 48%,
+        var(--scene-wall-shade) 100%
+      );
+  }
+
+  .wp-wall::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--scene-shadow);
+    opacity: 0.05;
+    -webkit-mask: var(--texture-plaster) 0 0 / 220px 220px;
+    mask: var(--texture-plaster) 0 0 / 220px 220px;
+  }
+
+  .wp-opening {
+    position: absolute;
+    top: calc(var(--window-y) * 1%);
+    left: 50%;
+    width: calc(var(--win-w) * var(--mm));
+    height: calc(var(--win-h) * var(--mm));
+    translate: -50% -50%;
+    transition:
+      --win-w 720ms var(--ease-glide),
+      --win-h 720ms var(--ease-glide);
+  }
+
+  /*
+    Requadro: as quatro faces internas do vão. O peitoril recebe a luz do dia, a verga fica
+    na sombra; o lado direito pega a luz do cômodo e o esquerdo fica mais fechado. Todas
+    clareiam perto do vidro.
+  */
+  .wp-reveal {
+    position: absolute;
+    inset: calc(var(--reveal-top) * -1) calc(var(--reveal-side) * -1)
+      calc(var(--reveal-bottom) * -1);
+  }
+
+  .wp-reveal-face {
+    position: absolute;
+  }
+
+  .wp-reveal-face[data-side="top"] {
+    top: 0;
+    right: 0;
+    left: 0;
+    height: var(--reveal-top);
+    clip-path: polygon(0 0, 100% 0, calc(100% - var(--reveal-side)) 100%, var(--reveal-side) 100%);
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--scene-wall), var(--scene-light) 45%) 0,
+      color-mix(in oklab, var(--scene-wall), var(--scene-shadow) 17%) 1.5px,
+      color-mix(in oklab, var(--scene-wall), var(--scene-shadow) 9%) 100%
+    );
+  }
+
+  .wp-reveal-face[data-side="bottom"] {
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: var(--reveal-bottom);
+    clip-path: polygon(var(--reveal-side) 0, calc(100% - var(--reveal-side)) 0, 100% 100%, 0 100%);
+    background: linear-gradient(
+      0deg,
+      color-mix(in oklab, var(--scene-wall), var(--scene-shadow) 7%) 0,
+      color-mix(in oklab, var(--scene-wall-lit), var(--scene-light) 38%) 100%
+    );
+  }
+
+  .wp-reveal-face[data-side="left"] {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--reveal-side);
+    clip-path: polygon(0 0, 100% var(--reveal-top), 100% calc(100% - var(--reveal-bottom)), 0 100%);
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--scene-wall), var(--scene-light) 45%) 0,
+      color-mix(in oklab, var(--scene-wall), var(--scene-shadow) 13%) 1.5px,
+      color-mix(in oklab, var(--scene-wall), var(--scene-shadow) 4%) 100%
+    );
+  }
+
+  .wp-reveal-face[data-side="right"] {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--reveal-side);
+    clip-path: polygon(0 var(--reveal-top), 100% 0, 100% 100%, 0 calc(100% - var(--reveal-bottom)));
+    background: linear-gradient(
+      270deg,
+      color-mix(in oklab, var(--scene-wall), var(--scene-shadow) 4%) 0,
+      color-mix(in oklab, var(--scene-wall-lit), var(--scene-light) 26%) 100%
+    );
+  }
+
+  .wp-window {
+    position: absolute;
+    inset: 0;
+  }
+
+  /*
+    Vista externa: a foto fica presa à cena, não à janela. Quando o vão muda de tamanho, a
+    paisagem continua no lugar, como numa abertura de verdade.
+  */
+  .wp-view {
+    position: absolute;
+    inset: calc(var(--frame-face) * 0.5);
+    overflow: hidden;
+    background: var(--scene-sky);
+  }
+
+  /* A foto (3:2) tem 180% da cena; o centro da janela cai sobre a fachada e o céu. */
+  .wp-view img {
+    position: absolute;
+    top: calc(50% - 0.4 * 120cqmin);
+    left: calc(50% - 0.74 * 180cqmin);
+    width: 180cqmin;
+    max-width: none;
+    height: 120cqmin;
+    filter: saturate(0.9) brightness(1.02);
+  }
+
+  .wp-track {
+    inset: var(--frame-face);
+  }
+
+  .wp-sashes {
+    position: absolute;
+    inset: var(--frame-face);
+    perspective: calc(var(--mm) * 3800);
+    animation: wp-sashes-in 560ms var(--ease-glide) both;
+  }
+
+  .window-preview[data-sliding="true"] .wp-sashes {
+    inset: calc(var(--frame-face) + var(--track-face));
+  }
+
+  @keyframes wp-sashes-in {
+    from {
+      opacity: 0.25;
+      transform: scale(0.994);
+    }
+  }
+
+  .wp-sash {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    transition: transform 1s var(--ease-swing);
+  }
+
+  .wp-sash .window-glass {
+    inset: calc(var(--sash-face) + var(--bead-face));
+  }
+
+  .wp-bead {
+    inset: var(--sash-face);
+  }
+
+  /* Correr: duas folhas em trilhos paralelos; a da direita corre no trilho interno, à frente. */
+  .wp-sash[data-position="left"],
+  .wp-sash[data-position="right"] {
+    width: calc(50% + var(--meeting) / 2);
+  }
+
+  .wp-sash[data-position="left"] {
+    right: auto;
+    filter: brightness(0.97);
+  }
+
+  .wp-sash[data-position="right"] {
+    left: auto;
+  }
+
+  /* Espessura da folha: só aparece quando ela gira para fora do plano do marco. */
+  .wp-sash-edge {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 160ms linear;
+    background: linear-gradient(
+      var(--wp-edge-dir),
+      var(--finish-light) 0,
+      var(--finish-base) 18%,
+      var(--finish-base) 44%,
+      var(--finish-deep) 46%,
+      var(--finish-deep) 52%,
+      var(--finish-shade) 55%,
+      var(--finish-shade) 100%
+    );
+  }
+
+  .wp-sash-edge[data-edge="right"] {
+    --wp-edge-dir: to left;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--sash-depth);
+    transform: rotateY(-90deg);
+    transform-origin: right center;
+  }
+
+  .wp-sash-edge[data-edge="top"] {
+    --wp-edge-dir: to bottom;
+
+    top: 0;
+    right: 0;
+    left: 0;
+    height: var(--sash-depth);
+    transform: rotateX(-90deg);
+    transform-origin: center top;
+  }
+
+  /* Posição das ferragens. Na folha: */
+  .wp-at-stile {
+    top: 50%;
+    right: calc(var(--sash-face) / 2);
+    translate: 50% -50%;
+  }
+
+  .wp-at-rail {
+    --wh-rotate: -90deg;
+
+    bottom: calc(var(--sash-face) / 2);
+    left: 50%;
+    translate: -50% 50%;
+  }
+
+  .wp-at-meeting {
+    top: 50%;
+    left: calc(var(--sash-face) / 2);
+    translate: -50% -50%;
+  }
+
+  /* No marco, sobre a junta com a folha: */
+  .wp-at-hinge-top,
+  .wp-at-hinge-bottom {
+    left: 0;
+    translate: -50% -50%;
+  }
+
+  .wp-at-hinge-top {
+    top: 13%;
+  }
+
+  .wp-at-hinge-bottom {
+    top: 87%;
+  }
+
+  .wp-at-corner-top {
+    top: calc(var(--mm) * 10);
+    left: calc(var(--mm) * -8.5);
+  }
+
+  .wp-at-corner-bottom {
+    bottom: calc(var(--mm) * 10);
+    left: calc(var(--mm) * -8.5);
+  }
+
+  .wp-at-pivot-top,
+  .wp-at-pivot-bottom {
+    left: 50%;
+  }
+
+  .wp-at-pivot-top {
+    top: 0;
+    translate: -50% -50%;
+  }
+
+  .wp-at-pivot-bottom {
+    bottom: 0;
+    translate: -50% 50%;
+  }
+
+  /*
+    Abertura (botão "Ver abertura"): primeiro a maçaneta gira, depois a folha se move.
+    Ao fechar, a ordem se inverte.
+  */
+  .window-preview[data-open="true"] .wp-sash {
+    transition-delay: 320ms;
+  }
+
+  .window-preview[data-open="true"] .wp-sash-edge {
+    opacity: 1;
+    transition-delay: 320ms;
+  }
+
+  .window-preview[data-open="false"] .wp-sash-edge {
+    transition-delay: 1100ms;
+  }
+
+  .window-preview[data-open="false"] .wh-part {
+    transition-delay: 700ms;
+  }
+
+  /* Giro: abre para dentro sobre as dobradiças da esquerda. */
+  .window-preview[data-system="giro"] .wp-sash {
+    transform-origin: left center;
+  }
+
+  .window-preview[data-system="giro"][data-open="true"] .wp-sash {
+    transform: rotateY(-30deg);
+  }
+
+  .window-preview[data-system="giro"][data-open="true"] .window-hardware {
+    --wh-lever: 90deg;
+  }
+
+  /* Oscilo-batente: maçaneta para cima e a folha tomba para dentro, sobre a base. */
+  .window-preview[data-system="oscilo-batente"] .wp-sash {
+    transform-origin: center bottom;
+  }
+
+  .window-preview[data-system="oscilo-batente"][data-open="true"] .wp-sash {
+    transform: rotateX(-12deg);
+  }
+
+  .window-preview[data-system="oscilo-batente"][data-open="true"] .window-hardware {
+    --wh-lever: 180deg;
+  }
+
+  /* Maxim-ar: projeta para fora a partir do topo. */
+  .window-preview[data-system="maxim-ar"] .wp-sash {
+    transform-origin: center top;
+  }
+
+  .window-preview[data-system="maxim-ar"][data-open="true"] .wp-sash {
+    transform: rotateX(-24deg);
+  }
+
+  .window-preview[data-system="maxim-ar"][data-open="true"] .window-hardware {
+    --wh-lever: 90deg;
+  }
+
+  /* Pivotante: gira sobre o eixo vertical central, metade para dentro e metade para fora. */
+  .window-preview[data-system="pivotante"] .wp-sash {
+    transform-origin: center center;
+  }
+
+  .window-preview[data-system="pivotante"][data-open="true"] .wp-sash {
+    transform: rotateY(-44deg);
+  }
+
+  .window-preview[data-system="pivotante"][data-open="true"] .wp-sash .window-hardware {
+    --wh-lever: 90deg;
+  }
+
+  /* Correr: o fecho solta e a folha interna desliza sobre a externa. */
+  .window-preview[data-system="correr"][data-open="true"] .wp-sash[data-position="right"] {
+    transform: translateX(calc((var(--meeting) - 100%) * 0.9));
+  }
+
+  .window-preview[data-system="correr"][data-open="true"] .window-hardware {
+    --wh-lever: -70deg;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .window-preview,
+    .wp-opening,
+    .wp-sash {
+      transition: none !important;
+    }
+
+    .wp-sashes {
+      animation: none;
+    }
+  }
+}

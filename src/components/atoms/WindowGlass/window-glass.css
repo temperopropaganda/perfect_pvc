@@ -1,0 +1,78 @@
+@layer components {
+  .window-glass {
+    --wg-mm: var(--mm, 0.25px);
+    --wg-gasket: max(1px, calc(var(--wg-mm) * 3));
+
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+
+    /* Corpo do vidro: leve absorção esverdeada e véu do reflexo do ambiente. */
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--scene-sky) 22%, transparent) 0%,
+        color-mix(in oklab, var(--scene-sky) 7%, transparent) 34%,
+        transparent 58%,
+        color-mix(in oklab, var(--scene-light) 5%, transparent) 100%
+      ),
+      color-mix(in oklab, var(--scene-glass-tint) 13%, transparent);
+
+    /*
+      Em ordem: borracha de vedação, sombra que o baguete projeta no vidro (luz do alto à
+      esquerda), o perfil refletido junto da borda e um halo mais largo do mesmo reflexo,
+      ambos na cor do acabamento.
+    */
+    box-shadow:
+      inset 0 0 0 var(--wg-gasket) var(--finish-gasket),
+      inset calc(var(--wg-mm) * 3) calc(var(--wg-mm) * 5) calc(var(--wg-mm) * 7)
+        calc(var(--wg-mm) * -1) color-mix(in oklab, var(--scene-shadow) 30%, transparent),
+      inset 0 0 calc(var(--wg-mm) * 7) calc(var(--wg-mm) * 4)
+        color-mix(in oklab, var(--finish-base) 26%, transparent),
+      inset 0 0 calc(var(--wg-mm) * 30) calc(var(--wg-mm) * 2)
+        color-mix(in oklab, var(--finish-base) 18%, transparent);
+  }
+
+  /* Aresta do vidro logo depois da borracha: acende embaixo e à direita, onde a luz bate. */
+  .window-glass::before {
+    content: "";
+    position: absolute;
+    inset: var(--wg-gasket);
+    box-shadow:
+      inset -1px -1px 0 color-mix(in oklab, var(--scene-light) 42%, transparent),
+      inset 1px 1px 0 color-mix(in oklab, var(--scene-light) 10%, transparent);
+  }
+
+  /*
+    Segunda lâmina do vidro duplo: o eco fino da borracha refletido alguns milímetros para
+    dentro. É o que separa um vidro com espessura de uma película.
+  */
+  .window-glass::after {
+    content: "";
+    position: absolute;
+    inset: calc(var(--wg-gasket) + var(--wg-mm) * 9);
+    border: max(1px, calc(var(--wg-mm) * 1.6)) solid
+      color-mix(in oklab, var(--finish-deep) 20%, transparent);
+    filter: blur(calc(var(--wg-mm) * 1.2));
+  }
+
+  /* Reflexos: luz ambiente do cômodo no alto e um reflexo largo e muito suave. */
+  .wg-reflection {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        130% 70% at 16% -6%,
+        color-mix(in oklab, var(--scene-light) 16%, transparent),
+        transparent 62%
+      ),
+      linear-gradient(
+        102deg,
+        transparent 24%,
+        color-mix(in oklab, var(--scene-light) 10%, transparent) 44%,
+        transparent 64%
+      );
+    transition: opacity 900ms var(--ease-soft);
+  }
+}

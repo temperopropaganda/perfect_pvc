@@ -1,0 +1,424 @@
+@theme inline {
+  --font-sans: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter Tight Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-display);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Escalas da marca (catálogo Perfect 2026, ver design/README.md) */
+  --color-blue-50: var(--blue-50);
+  --color-blue-100: var(--blue-100);
+  --color-blue-200: var(--blue-200);
+  --color-blue-300: var(--blue-300);
+  --color-blue-400: var(--blue-400);
+  --color-blue-500: var(--blue-500);
+  --color-blue-600: var(--blue-600);
+  --color-blue-700: var(--blue-700);
+  --color-blue-800: var(--blue-800);
+  --color-blue-900: var(--blue-900);
+  --color-blue-950: var(--blue-950);
+
+  --color-sky-50: var(--sky-50);
+  --color-sky-100: var(--sky-100);
+  --color-sky-200: var(--sky-200);
+  --color-sky-300: var(--sky-300);
+  --color-sky-400: var(--sky-400);
+  --color-sky-500: var(--sky-500);
+  --color-sky-600: var(--sky-600);
+
+  --color-graphite-50: var(--graphite-50);
+  --color-graphite-100: var(--graphite-100);
+  --color-graphite-200: var(--graphite-200);
+  --color-graphite-300: var(--graphite-300);
+  --color-graphite-400: var(--graphite-400);
+  --color-graphite-500: var(--graphite-500);
+  --color-graphite-600: var(--graphite-600);
+  --color-graphite-700: var(--graphite-700);
+  --color-graphite-800: var(--graphite-800);
+  --color-graphite-900: var(--graphite-900);
+  --color-graphite-950: var(--graphite-950);
+
+  /* Apelidos semânticos usados pelos componentes */
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-soft: var(--brand-soft);
+  --color-ice: var(--ice);
+  --color-ice-soft: var(--ice-soft);
+  --color-ice-mist: var(--ice-mist);
+  --color-ice-deep: var(--ice-deep);
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-night: var(--night);
+  --color-night-soft: var(--night-soft);
+  --color-frame: var(--frame);
+  --color-pvc: var(--pvc);
+  --color-glass: var(--glass);
+  --color-ink: var(--ink);
+  --color-snow: var(--snow);
+  --color-scrim: var(--scrim);
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.25);
+  --radius-2xl: calc(var(--radius) * 1.5);
+  --radius-3xl: calc(var(--radius) * 2);
+  --radius-4xl: calc(var(--radius) * 2.5);
+}
+
+@theme {
+  /* Movimento: uma curva de entrada, uma de transição e uma linear para scrub. */
+  --ease-glide: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-swing: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+
+  --tracking-display: -0.045em;
+  --tracking-title: -0.035em;
+  --tracking-label: 0.18em;
+
+  --spacing-gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --spacing-section: clamp(6rem, 14vw, 13rem);
+  --container-site: 1440px;
+}
+
+:root {
+  color-scheme: light;
+
+  /* Azul Perfect: o azul-marinho do logotipo e dos painéis do catálogo (#2d3062 = 700). */
+  --blue-50: #f2f3f8;
+  --blue-100: #e4e6f0;
+  --blue-200: #c8cbe0;
+  --blue-300: #a2a6c8;
+  --blue-400: #7479a8;
+  --blue-500: #4f5490;
+  --blue-600: #3a3e78;
+  --blue-700: #2d3062;
+  --blue-800: #23264f;
+  --blue-900: #191b3b;
+  --blue-950: #0f1026;
+
+  /* Azul-vidro: o azul claro dos selos de certificação do catálogo (#9cc3d5 = 300). */
+  --sky-50: #f0f6f9;
+  --sky-100: #e0edf3;
+  --sky-200: #c4dde8;
+  --sky-300: #9cc3d5;
+  --sky-400: #72a7c0;
+  --sky-500: #4f8aa7;
+  --sky-600: #3c6f8a;
+
+  /* Grafite: o acabamento "Cinza" (#2c3439 = 800) e os cinzas de texto do catálogo. */
+  --graphite-50: #f6f7f7;
+  --graphite-100: #eceeef;
+  --graphite-200: #dfe2e4;
+  --graphite-300: #c4c8cb;
+  --graphite-400: #a1a5a9;
+  --graphite-500: #7b8085;
+  --graphite-600: #5c6166;
+  --graphite-700: #41474c;
+  --graphite-800: #2c3439;
+  --graphite-900: #1d2226;
+  --graphite-950: #111417;
+
+  /* Sálvia do catálogo: documentada, mas fora da interface por decisão de direção de arte. */
+  --sage-detail: #d3d19e;
+
+  --brand: var(--blue-700);
+  --brand-deep: var(--blue-900);
+  --brand-soft: var(--blue-300);
+  --ice: var(--sky-200);
+  --ice-soft: var(--sky-100);
+  --ice-mist: var(--sky-50);
+  --ice-deep: var(--sky-400);
+  --paper: var(--graphite-50);
+  --paper-deep: var(--graphite-100);
+  --night: var(--graphite-950);
+  --night-soft: var(--graphite-900);
+  --frame: var(--graphite-800);
+  --pvc: #fbfbfa;
+  --glass: var(--sky-200);
+  --ink: var(--graphite-950);
+  --snow: #f4f6f7;
+  --scrim: rgb(9 11 16);
+  --heat: #ff9a4a;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: #ffffff;
+  --card-foreground: var(--ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--ink);
+  --primary: var(--blue-700);
+  --primary-foreground: #ffffff;
+  --secondary: var(--graphite-100);
+  --secondary-foreground: var(--ink);
+  --muted: var(--graphite-100);
+  --muted-foreground: var(--graphite-600);
+  --accent: var(--sky-100);
+  --accent-foreground: var(--blue-700);
+  --destructive: #b4381f;
+  --border: var(--graphite-200);
+  --input: var(--graphite-200);
+  --ring: var(--blue-500);
+  --chart-1: var(--blue-700);
+  --chart-2: var(--blue-500);
+  --chart-3: var(--sky-400);
+  --chart-4: var(--graphite-500);
+  --chart-5: var(--graphite-300);
+  --radius: 1rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--blue-700);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--graphite-100);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: var(--graphite-200);
+  --sidebar-ring: var(--blue-500);
+
+  /* Material de vidro único (versão clara). A versão fumê fica em .dark. */
+  --glass-fill: rgb(246 247 247 / 0.62);
+  --glass-fill-strong: rgb(246 247 247 / 0.86);
+  --glass-stroke: rgb(255 255 255 / 0.7);
+  --glass-edge: rgb(17 20 23 / 0.08);
+  --glass-highlight: rgb(255 255 255 / 0.9);
+  --glass-sheen: rgb(255 255 255 / 0.55);
+  --glass-shadow: 0 18px 48px -18px rgb(17 20 23 / 0.28);
+  --glass-blur: 22px;
+  --glass-saturate: 170%;
+  --glass-hover: rgb(17 20 23 / 0.06);
+
+  /* Cena do configurador de esquadrias: parede, requadro, vidro e luz. */
+  --scene-wall: #e6e3de;
+  --scene-wall-lit: #f1efeb;
+  --scene-wall-shade: #d3cfc8;
+  --scene-shadow: #17140f;
+  --scene-light: #ffffff;
+  --scene-glass-tint: #5f7a7c;
+  --scene-sky: #dfe9ef;
+
+  /* Texturas de material (ruído SVG usado como máscara; a cor vem do acabamento). */
+  --texture-grain-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='96'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0045 0.2' numOctaves='4' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2.4 0 0 0 -0.85'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23n)'/%3E%3C/svg%3E");
+  --texture-grain-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='480'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.2 0.0045' numOctaves='4' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2.4 0 0 0 -0.85'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23n)'/%3E%3C/svg%3E");
+  --texture-sparkle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 -2.9'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23n)'/%3E%3C/svg%3E");
+  --texture-plaster: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 0 0 0 -0.45'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Seções escuras: grafite profundo, com o azul da marca como acento. */
+.dark {
+  color-scheme: dark;
+
+  --background: var(--night);
+  --foreground: var(--snow);
+  --card: var(--graphite-900);
+  --card-foreground: var(--snow);
+  --popover: var(--graphite-900);
+  --popover-foreground: var(--snow);
+  --primary: #ffffff;
+  --primary-foreground: var(--blue-900);
+  --secondary: var(--graphite-800);
+  --secondary-foreground: var(--snow);
+  --muted: var(--graphite-900);
+  --muted-foreground: var(--graphite-400);
+  --accent: var(--blue-800);
+  --accent-foreground: var(--snow);
+  --destructive: #e8704f;
+  --border: rgb(255 255 255 / 12%);
+  --input: rgb(255 255 255 / 16%);
+  --ring: var(--sky-300);
+  --sidebar: var(--graphite-900);
+  --sidebar-foreground: var(--snow);
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: var(--blue-900);
+  --sidebar-accent: var(--graphite-800);
+  --sidebar-accent-foreground: var(--snow);
+  --sidebar-border: rgb(255 255 255 / 12%);
+  --sidebar-ring: var(--sky-300);
+
+  --glass-fill: rgb(20 24 30 / 0.42);
+  --glass-fill-strong: rgb(20 24 30 / 0.78);
+  --glass-stroke: rgb(255 255 255 / 0.14);
+  --glass-edge: rgb(0 0 0 / 0.2);
+  --glass-highlight: rgb(255 255 255 / 0.22);
+  --glass-sheen: rgb(196 221 232 / 0.12);
+  --glass-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.6);
+  --glass-hover: rgb(255 255 255 / 0.08);
+}
+
+/*
+  Acabamentos dos perfis (configurador de esquadrias). Tons ilustrativos, amostrados do catálogo.
+  Cada acabamento define a cor base e as derivadas que dão volume ao perfil:
+  light = faces voltadas para a luz, shade = faces na sombra, deep = frestas e juntas,
+  edge = brilho fino das arestas. grain e sparkle dosam o veio de madeira e o brilho mineral.
+  As propriedades são registradas para a troca de cor transicionar em vez de saltar.
+*/
+@property --finish-base {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --finish-light {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --finish-shade {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --finish-deep {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --finish-edge {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --finish-hardware {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --finish-gasket {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --finish-grain {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --finish-sparkle {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* PVC branco acetinado: sombras quentes e médias para o volume não sumir. */
+[data-finish="branco"] {
+  --finish-base: #efede8;
+  --finish-light: #fbfaf8;
+  --finish-shade: #d2cfc7;
+  --finish-deep: #9c988f;
+  --finish-edge: #ffffff;
+  --finish-hardware: #f2f1ed;
+  --finish-gasket: #5b5e60;
+  --finish-grain: 0;
+  --finish-sparkle: 0;
+}
+
+/* Preto: grafite quase preto, com luz suficiente para ler arestas e juntas. */
+[data-finish="preto"] {
+  --finish-base: #2f3033;
+  --finish-light: #4c4e53;
+  --finish-shade: #222326;
+  --finish-deep: #111214;
+  --finish-edge: #7d8087;
+  --finish-hardware: #d9d6cf;
+  --finish-gasket: #141516;
+  --finish-grain: 0;
+  --finish-sparkle: 0.03;
+}
+
+/* Cinza: antracite azulado, mais claro e frio que o preto. */
+[data-finish="cinza"] {
+  --finish-base: #3b444b;
+  --finish-light: #5a656e;
+  --finish-shade: #293036;
+  --finish-deep: #151a1e;
+  --finish-edge: #8d99a3;
+  --finish-hardware: #d9d6cf;
+  --finish-gasket: #141516;
+  --finish-grain: 0;
+  --finish-sparkle: 0.08;
+}
+
+[data-finish="embero"] {
+  --finish-base: #7b4b2a;
+  --finish-light: #9c6640;
+  --finish-shade: #5c361c;
+  --finish-deep: #3a1f0e;
+  --finish-edge: #c79466;
+  --finish-hardware: #d9d6cf;
+  --finish-gasket: #1c1714;
+  --finish-grain: 0.5;
+  --finish-sparkle: 0;
+}
+
+[data-finish="nogal"] {
+  --finish-base: #523720;
+  --finish-light: #6f4d2d;
+  --finish-shade: #3b2714;
+  --finish-deep: #20140a;
+  --finish-edge: #9c7550;
+  --finish-hardware: #d9d6cf;
+  --finish-gasket: #17120e;
+  --finish-grain: 0.58;
+  --finish-sparkle: 0;
+}
+
+/* Bronze: metálico sóbrio, com mais contraste entre luz e sombra. */
+[data-finish="bronze"] {
+  --finish-base: #5e4e31;
+  --finish-light: #84704a;
+  --finish-shade: #42361f;
+  --finish-deep: #261f11;
+  --finish-edge: #bba476;
+  --finish-hardware: #e2ddcf;
+  --finish-gasket: #18150f;
+  --finish-grain: 0;
+  --finish-sparkle: 0.14;
+}
+
+/* Pirita: mineral claro com brilho fino. */
+[data-finish="pirita"] {
+  --finish-base: #8a816c;
+  --finish-light: #aaa18a;
+  --finish-shade: #6a624f;
+  --finish-deep: #433d30;
+  --finish-edge: #ddd4bb;
+  --finish-hardware: #efece5;
+  --finish-gasket: #1d1b17;
+  --finish-grain: 0;
+  --finish-sparkle: 0.24;
+}

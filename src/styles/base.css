@@ -1,0 +1,222 @@
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  figcaption {
+    text-wrap: pretty;
+  }
+
+  img,
+  video,
+  svg {
+    max-width: 100%;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--blue-700);
+    color: #ffffff;
+  }
+}
+
+/*
+  Material de vidro único do site (aproximação web do Liquid Glass, não é o material oficial
+  da Apple). Mesma receita em todo lugar: preenchimento, desfoque, saturação, borda, brilho
+  superior e sombra. Só os valores mudam entre claro (:root) e fumê (.dark).
+*/
+@utility glass {
+  background: linear-gradient(180deg, var(--glass-sheen), transparent 46%), var(--glass-fill);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--glass-stroke);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 0 0 0.5px var(--glass-edge),
+    var(--glass-shadow);
+}
+
+/* Contraste reforçado para menus e painéis grandes sobre fotos claras. */
+@utility glass-strong {
+  background:
+    linear-gradient(180deg, var(--glass-sheen), transparent 46%), var(--glass-fill-strong);
+  backdrop-filter: blur(calc(var(--glass-blur) * 1.4)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 1.4)) saturate(var(--glass-saturate));
+  border: 1px solid var(--glass-stroke);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 0 0 0.5px var(--glass-edge),
+    var(--glass-shadow);
+}
+
+/* Componentes antigos pedem a versão fumê fora de uma seção .dark. */
+@utility glass-dark {
+  --glass-fill: rgb(20 24 30 / 0.42);
+  --glass-stroke: rgb(255 255 255 / 0.14);
+  --glass-edge: rgb(0 0 0 / 0.2);
+  --glass-highlight: rgb(255 255 255 / 0.22);
+  --glass-sheen: rgb(196 221 232 / 0.12);
+  --glass-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.6);
+  background: linear-gradient(180deg, var(--glass-sheen), transparent 46%), var(--glass-fill);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--glass-stroke);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 0 0 0.5px var(--glass-edge),
+    var(--glass-shadow);
+}
+
+@utility site-container {
+  width: 100%;
+  max-width: var(--container-site);
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+/* Escala tipográfica editorial: títulos leves, rótulos em caixa alta espaçada. */
+@utility text-display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: var(--tracking-display);
+  line-height: 0.94;
+}
+
+@utility text-title {
+  font-family: var(--font-display);
+  font-weight: 350;
+  letter-spacing: var(--tracking-title);
+  line-height: 1.02;
+}
+
+@utility text-label {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+@utility text-lead {
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  line-height: 1.6;
+}
+
+/* Linha que se desenha sob links editoriais. */
+@utility link-line {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.6s var(--ease-glide);
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass-strong,
+  .glass-dark {
+    background: var(--glass-fill-strong);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Lenis (scroll suave) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Fundo dos modais do shadcn: escurece e desfoca a página (o componente gerado não é editado). */
+[data-slot="dialog-overlay"] {
+  background: rgb(9 11 16 / 0.72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+/* Botão de fechar dos modais: mesmo vidro fumê da navegação. */
+[data-slot="dialog-close"] {
+  z-index: 10;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  color: var(--snow);
+  background: rgb(20 24 30 / 0.55);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.22);
+}
+
+[data-slot="dialog-close"]:hover {
+  background: rgb(20 24 30 / 0.75);
+  color: var(--snow);
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+@utility animate-scroll-cue {
+  animation: scroll-cue 2.4s var(--ease-swing) infinite;
+}
