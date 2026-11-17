@@ -38,7 +38,7 @@ export const PerformanceSection = () => {
       className="dark relative overflow-hidden bg-background py-24 text-foreground md:py-36"
     >
       <img
-        src="/images/sobre/sobre-03.webp"
+        src="/images/acervo/perfil-detalhe-2400.webp"
         alt=""
         aria-hidden="true"
         loading="lazy"
