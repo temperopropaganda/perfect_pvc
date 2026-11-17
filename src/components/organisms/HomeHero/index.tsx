@@ -9,11 +9,10 @@ import { prefersReducedMotion } from "@src/lib/smooth-scroll";
 
 type HomeHeroProps = {
   photo: PictureSource;
-  caption: string;
 };
 
 // A foto se abre como uma janela: começa num vão estreito e se expande até a tela inteira.
-export const HomeHero = ({ photo, caption }: HomeHeroProps) => {
+export const HomeHero = ({ photo }: HomeHeroProps) => {
   const root = useRef<HTMLElement>(null);
   const frame = useRef<HTMLDivElement>(null);
   const media = useRef<HTMLDivElement>(null);
@@ -95,10 +94,9 @@ export const HomeHero = ({ photo, caption }: HomeHeroProps) => {
         />
         <div className="mt-10 flex items-end justify-between gap-8 border-t border-white/15 pt-6 md:mt-14">
           <p data-hero-fade className="text-lead max-w-[36ch] text-graphite-200">
-            Janelas e portas que deixam a luz entrar e o ruído, o vento e a chuva do lado de fora.
+            Janelas e portas que acolhem a luz e deixam o tempo do lado de fora.
           </p>
           <div data-hero-fade className="hidden items-end gap-10 md:flex">
-            <span className="text-label text-right text-graphite-300">{caption}</span>
             <ScrollCue className="text-white" />
           </div>
         </div>
