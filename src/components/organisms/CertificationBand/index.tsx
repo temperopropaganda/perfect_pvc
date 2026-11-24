@@ -70,11 +70,11 @@ export const CertificationBand = () => {
           {RESULTS.map((result) => (
             <li key={result.title} data-result className="flex flex-col gap-5">
               <span data-rule className="block h-px w-full origin-left bg-white/25" />
-              <span className="text-display text-[clamp(3.4rem,6.4vw,6.75rem)] text-white">
-                {result.value}
+              <span className="text-display max-w-[9ch] text-[clamp(2.4rem,4.4vw,4.5rem)] text-white">
+                {result.title}
               </span>
               <span className="flex flex-col gap-1">
-                <span className="font-display text-lg">{result.title}</span>
+                <span className="font-display text-2xl text-gold-300">{result.value}</span>
                 <span className="text-sm text-graphite-400">Grau máximo · {result.norm}</span>
               </span>
             </li>

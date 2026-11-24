@@ -3,8 +3,9 @@ import { useRef } from "react";
 import { Link } from "react-router";
 
 import { Logo } from "@src/components/atoms/Logo";
+import { SocialIcon } from "@src/components/atoms/SocialIcon";
 import { VariableProximity } from "@src/components/atoms/VariableProximity";
-import { NAV_ITEMS, SITE } from "@src/lib/site-config";
+import { NAV_ITEMS, SITE, SOCIAL_LINKS } from "@src/lib/site-config";
 import { publicUrl } from "@src/lib/public-url";
 
 const linkClass = "link-line text-graphite-300 transition-colors duration-300 hover:text-white";
@@ -19,7 +20,7 @@ export const SiteFooter = () => {
           <div className="flex flex-col items-start gap-8 md:col-span-5">
             <Logo className="text-[18px] text-white" />
             <p className="text-title max-w-[18ch] text-[clamp(1.75rem,3vw,2.5rem)] text-white">
-              Esquadrias em PVC com tecnologia alemã Kömmerling.
+              Soluções inteligentes em esquadrias.
             </p>
             <a
               href={SITE.catalogUrl}
@@ -35,7 +36,7 @@ export const SiteFooter = () => {
             </a>
           </div>
 
-          <nav aria-label="Rodapé" className="flex flex-col gap-3 md:col-span-2 md:col-start-7">
+          <nav aria-label="Rodapé" className="flex flex-col gap-3 md:col-span-2 md:col-start-6">
             <span className="text-label mb-2 text-graphite-500">Navegue</span>
             <Link to="/" className={linkClass}>
               <span>Início</span>
@@ -78,19 +79,28 @@ export const SiteFooter = () => {
 
           <div className="flex flex-col gap-3 md:col-span-2">
             <span className="text-label mb-2 text-graphite-500">Redes</span>
-            <a href={SITE.instagramUrl} target="_blank" rel="noreferrer" className={linkClass}>
-              Instagram
-            </a>
-            <a href={SITE.facebookUrl} target="_blank" rel="noreferrer" className={linkClass}>
-              Facebook
-            </a>
+            <ul className="flex items-center gap-2">
+              {SOCIAL_LINKS.map((social) => (
+                <li key={social.network}>
+                  <a
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.label}
+                    className="flex size-10 items-center justify-center rounded-full border border-white/15 text-graphite-300 transition-colors duration-300 hover:border-white/40 hover:text-white"
+                  >
+                    <SocialIcon network={social.network} className="size-4" />
+                  </a>
+                </li>
+              ))}
+            </ul>
             <img
               src={publicUrl("/brand/selo-janela-qualificada.png")}
               alt="Selo Janela Qualificada ASPEC PVC"
               loading="lazy"
               width={650}
               height={591}
-              className="mt-4 w-20 rounded-lg bg-white p-2"
+              className="mt-4 w-20"
             />
           </div>
         </div>

@@ -7,15 +7,23 @@ import {
   productsService,
   type ProductFilterValue,
 } from "@src/application/services/products-service";
+import { libraryPhoto } from "@src/application/services/library-photos";
 import { FinishConfigurator } from "@src/components/organisms/FinishConfigurator";
+import { GlassTypes } from "@src/components/organisms/GlassTypes";
 import { PerformanceSection } from "@src/components/organisms/PerformanceSection";
 import { ProductCatalog } from "@src/components/organisms/ProductCatalog";
 import { ProductDetail } from "@src/components/organisms/ProductDetail";
 import { ProductsHero } from "@src/components/organisms/ProductsHero";
+import { VerticalEngineering } from "@src/components/organisms/VerticalEngineering";
 import { SiteTemplate } from "@src/components/templates/SiteTemplate";
 import { Dialog, DialogContent, DialogTitle } from "@src/components/ui/dialog";
 import type { ProductType } from "@src/domain/types/product-type";
+import { whatsappWith } from "@src/lib/site-config";
 import { pauseScroll, resumeScroll } from "@src/lib/smooth-scroll";
+
+const VERTICAL_CONTACT_URL = whatsappWith(
+  "Olá! Sou de uma construtora e gostaria de falar sobre esquadrias para um projeto vertical.",
+);
 
 const PRODUCT_PARAM = "produto";
 
@@ -61,8 +69,13 @@ export const ProdutosPage = () => {
         products={products}
         onSelect={openProduct}
       />
-      <FinishConfigurator finishes={finishesService.list()} />
+      <FinishConfigurator finishes={finishesService.list()} others={finishesService.others()} />
+      <GlassTypes />
       <PerformanceSection />
+      <VerticalEngineering
+        photos={[libraryPhoto("hotel-serra"), libraryPhoto("edificio-tijolo")]}
+        contactUrl={VERTICAL_CONTACT_URL}
+      />
       <Dialog open={isOpen} onOpenChange={(open) => !open && closeProduct()}>
         <DialogContent
           ref={popupRef}

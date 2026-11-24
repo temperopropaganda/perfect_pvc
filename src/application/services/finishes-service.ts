@@ -12,6 +12,22 @@ const FINISHES: FinishType[] = [
   { slug: "pirita", name: "Pirita", description: "Brilho sutil e textura mineral" },
 ];
 
+// "Outras possibilidades" da mesma página do catálogo, sob consulta.
+const OTHER_FINISHES = [
+  "Cinza Antracita",
+  "Trufa",
+  "Ardósia",
+  "Basalto",
+  "Quartzo",
+  "Signal",
+  "Amanita",
+  "Salvia",
+  "Carvalho Claro",
+  "Carvalho Mel",
+  "Amaranto",
+];
+
 export const finishesService = {
   list: (): FinishType[] => FINISHES,
+  others: (): string[] => OTHER_FINISHES,
 };

@@ -66,10 +66,10 @@ export const PerformanceSection = () => {
               >
                 <Icon aria-hidden="true" className="size-7 text-gold-300" />
                 <div className="flex flex-col gap-1">
-                  <span className="font-display text-[clamp(2.4rem,4vw,3.5rem)] font-light leading-none tracking-[-0.045em]">
-                    {item.value}
+                  <span className="font-display text-[clamp(1.9rem,3vw,2.6rem)] font-light leading-[1.05] tracking-[-0.04em]">
+                    {item.label}
                   </span>
-                  <span className="text-white/85">{item.label}</span>
+                  <span className="mt-2 font-display text-lg text-gold-300">{item.value}</span>
                   <span className="text-sm text-white/55">{item.norm}</span>
                 </div>
               </Reveal>

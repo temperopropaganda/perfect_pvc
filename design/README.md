@@ -73,6 +73,15 @@ refração só no Chrome) saiu do header para o vidro ficar igual em todos os na
 - Desses lotes só as WebP entram no repositório; o arquivo original de cada uma está em
   `design/fotos/origem-2026-11.json`.
 
+- **2026-11-24** (revisão da Lu, 23/11): três casas novas de `_2026/002_Fotos 2026` (casas 4 a 6),
+  com nomes provisórios **Casa Pedra e Madeira**, **Casa Pé-Direito Duplo** e **Casa Perfis
+  Pretos**, local a confirmar. Elas e as casas 1 a 3 abrem a lista de cases e o acordeão da Home.
+- Do catálogo 2026 (`003.3_Catálogo 2026/_FINAL/Miolo_Catálogo Perfect (30 x 30 cm).pdf`) saíram a
+  foto aérea da fábrica (pág. 8), a foto dos fundadores no showroom (pág. 7), a placa dos 10 anos
+  (pág. 12), os prédios de "projetos verticais" (págs. 41 e 42) em `public/images/sobre` e
+  `public/images/verticais`, e os três selos ASPEC PVC em `public/brand/selos`. As imagens do PDF
+  vêm em CMYK invertido: na conversão é preciso `-negate` antes de `-colorspace sRGB`.
+
 ## 3D
 
 - Janela oscilo-batente **ilustrativa** (não é desenho técnico da Perfect), em PVC antracita,
@@ -95,7 +104,13 @@ refração só no Chrome) saiu do header para o vidro ficar igual em todos os na
 ## Pendências
 
 - Validar textos de Casa Bosque e Casa Hortênsias (título, ano, produtos).
-- Vídeo curto de obra para o hero (hoje é foto com abertura animada).
+- Vídeo curto de obra para o hero. O `HomeHero` já aceita `videoSrc`; os vídeos de drone de
+  `_2026/002_Fotos 2026/007_Drone Casa` estão em HEVC 4K e precisam ser convertidos para H.264.
+- Arquivos originais do vídeo institucional e do vídeo dos 10 anos (hoje o site leva ao Instagram).
+- Foto do kit do arquiteto e texto definitivo da página de arquitetos.
+- Autorização dos clientes citados nos depoimentos e revisão dos textos.
+- Endereço do canal do YouTube (provisório em `site-config.ts`).
+- Pauta real do blog (os três posts são exemplos com dados do catálogo).
 - Logo em vetor (SVG): hoje o símbolo é recortado do favicon PNG e o nome é texto.
 - Fotos de detalhe de perfis, encontros de vidro e ferragens em alta resolução.
 - Fotos de produto mais editoriais para a faixa de sistemas da Home.

@@ -4,15 +4,19 @@ import { projectsService } from "@src/application/services/projects-service";
 import { CertificationBand } from "@src/components/organisms/CertificationBand";
 import { ClosingCta } from "@src/components/organisms/ClosingCta";
 import { FeaturedProjects } from "@src/components/organisms/FeaturedProjects";
+import { FunctionSeals } from "@src/components/organisms/FunctionSeals";
 import { HomeHero } from "@src/components/organisms/HomeHero";
 import { ManifestoSection } from "@src/components/organisms/ManifestoSection";
 import { PrecisionSection } from "@src/components/organisms/PrecisionSection";
 import { ShowcaseSection } from "@src/components/organisms/ShowcaseSection";
+import { SplitCallout } from "@src/components/organisms/SplitCallout";
 import { SystemsTrack } from "@src/components/organisms/SystemsTrack";
+import { Testimonials } from "@src/components/organisms/Testimonials";
 import { TiltTurnShowcase } from "@src/components/organisms/TiltTurnShowcase";
 import { SiteTemplate } from "@src/components/templates/SiteTemplate";
 import { useDocumentTitle } from "@src/application/hooks/useDocumentTitle";
-import { SITE } from "@src/lib/site-config";
+import { testimonialsService } from "@src/application/services/testimonials-service";
+import { SHOWROOM_VISIT_URL, SITE } from "@src/lib/site-config";
 
 const photo = projectsService.photo;
 
@@ -40,8 +44,16 @@ const PRECISION_FACTS = [
   },
 ];
 
-// Cases do acordeão da Home: seis painéis cabem com folga na largura do desktop.
-const FEATURED_SLUGS = ["cacador", "curva", "piscina-coberta", "grafite", "condominio", "videira"];
+// Cases do acordeão da Home: seis painéis cabem com folga na largura do desktop. As obras de 2026
+// vêm primeiro, como pedido na revisão de 2026-11-23.
+const FEATURED_SLUGS = [
+  "pe-direito-duplo",
+  "pedra-madeira",
+  "piscina-coberta",
+  "perfis-pretos",
+  "grafite",
+  "cacador",
+];
 
 export const HomePage = () => {
   useDocumentTitle("Perfect PVC · Esquadrias em PVC de alto padrão");
@@ -76,8 +88,37 @@ export const HomePage = () => {
         title="Um sistema construtivo inteligente."
         facts={PRECISION_FACTS}
       />
+      <FunctionSeals />
       <CertificationBand />
       <FeaturedProjects items={featured} />
+      <Testimonials items={testimonialsService.list()} />
+      <SplitCallout
+        label="Showroom"
+        title="Venha conhecer a Perfect *de perto.*"
+        photo={libraryPhoto("showroom-marca")}
+        actions={[
+          { label: "Agende sua visita", href: SHOWROOM_VISIT_URL },
+          { label: "Saiba mais", to: "/sobre" },
+        ]}
+      >
+        <p>
+          No showroom do novo parque fabril, em Arroio Trinta (SC), você vê os sistemas de abertura,
+          as cores dos perfis e as opções de vidro antes de decidir.
+        </p>
+      </SplitCallout>
+      <SplitCallout
+        label="Para arquitetos"
+        title="Especifique com *quem fabrica.*"
+        photo={libraryPhoto("perfil-cores")}
+        tone="dark"
+        reverse
+        actions={[{ label: "Espaço do arquiteto", to: "/arquitetos" }]}
+      >
+        <p>
+          Um canal direto com a engenharia da Perfect para compatibilizar projetos, escolher
+          tipologias e solicitar o kit de amostras de perfis e cores.
+        </p>
+      </SplitCallout>
       <ClosingCta
         label="Orçamento"
         title="Realizar sonhos é o *nosso alto padrão.*"

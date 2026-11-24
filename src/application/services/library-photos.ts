@@ -292,6 +292,43 @@ const LIBRARY_PHOTOS = {
     height: 450,
     alt: "Fachada da sede da Perfect com o logotipo e a cobertura de vidro, vista do alto",
   },
+  // Fotos tiradas do catálogo Perfect 2026 (Miolo, 30 x 30 cm), revisão de 2026-11-23.
+  "fabrica-aerea-catalogo": {
+    src: "/images/sobre/fabrica-aerea-catalogo",
+    width: 800,
+    height: 484,
+    alt: "Vista aérea do parque fabril da Perfect em Arroio Trinta, com a fachada azul e amarela",
+  },
+  "fundadores-showroom": {
+    src: "/images/sobre/fundadores-catalogo",
+    width: 786,
+    height: 800,
+    alt: "Shirlei e Dionei, fundadores da Perfect, no showroom diante do logotipo da empresa",
+  },
+  "placa-10-anos": {
+    src: "/images/sobre/placa-10-anos",
+    width: 800,
+    height: 632,
+    alt: "Placa comemorativa dos 10 anos de parceria entre a Perfect e a Kömmerling",
+  },
+  "hotel-serra": {
+    src: "/images/verticais/hotel-serra",
+    width: 800,
+    height: 398,
+    alt: "Hotel de três pavimentos com esquadrias pretas, cercado de mata",
+  },
+  "edificio-classico": {
+    src: "/images/verticais/edificio-classico",
+    width: 572,
+    height: 800,
+    alt: "Edifício residencial de fachada clássica com janelas Perfect em todos os andares",
+  },
+  "edificio-tijolo": {
+    src: "/images/verticais/edificio-tijolo",
+    width: 437,
+    height: 800,
+    alt: "Torre residencial com fachada de tijolo e grafite e esquadrias em todos os pavimentos",
+  },
 } satisfies Record<string, PhotoType>;
 
 export type LibraryPhotoName = keyof typeof LIBRARY_PHOTOS;

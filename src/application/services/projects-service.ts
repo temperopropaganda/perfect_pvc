@@ -10,11 +10,39 @@ const pick = (slug: string, name: string): PhotoType => {
   return photo;
 };
 
-// Projetos fotografados pela Perfect. Originais dos seis primeiros em src/assets/images/perfect; os
-// cinco adicionados em 2026-11 ficam só no HD (design/fotos/origem-2026-11.json). Nome provisório e
+// Projetos fotografados pela Perfect, das obras de 2026 (as três primeiras) para as mais antigas.
+// Originais dos seis primeiros projetos de 2023 em src/assets/images/perfect; os adicionados em
+// 2026-11 ficam só no HD (design/fotos/origem-2026-11.json). Nome provisório e
 // local "a confirmar" quando a pasta de fotos não diz. Título, ano, resumo e produtos
 // só aparecem quando a mesma obra está publicada em perfectpvc.com.br/obras.
 const PROJECTS: ProjectType[] = [
+  {
+    slug: "pe-direito-duplo",
+    name: "Casa Pé-Direito Duplo",
+    place: "Local a confirmar",
+    products: [],
+    cover: pick("pe-direito-duplo", "quinta-casa-perfect-57"),
+    photos: photosOf("pe-direito-duplo"),
+    pendingInfo: true,
+  },
+  {
+    slug: "pedra-madeira",
+    name: "Casa Pedra e Madeira",
+    place: "Local a confirmar",
+    products: [],
+    cover: pick("pedra-madeira", "quarta-casa-perfect-3"),
+    photos: photosOf("pedra-madeira"),
+    pendingInfo: true,
+  },
+  {
+    slug: "perfis-pretos",
+    name: "Casa Perfis Pretos",
+    place: "Local a confirmar",
+    products: [],
+    cover: pick("perfis-pretos", "sexta-casa-perfect-11"),
+    photos: photosOf("perfis-pretos"),
+    pendingInfo: true,
+  },
   {
     slug: "cacador",
     name: "Casa Caçador",
