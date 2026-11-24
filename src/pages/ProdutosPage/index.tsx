@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
 
+import { projectsService } from "@src/application/services/projects-service";
 import { finishesService } from "@src/application/services/finishes-service";
 import {
   productsService,
   type ProductFilterValue,
 } from "@src/application/services/products-service";
-import { CtaBand } from "@src/components/organisms/CtaBand";
 import { FinishConfigurator } from "@src/components/organisms/FinishConfigurator";
 import { PerformanceSection } from "@src/components/organisms/PerformanceSection";
 import { ProductCatalog } from "@src/components/organisms/ProductCatalog";
@@ -15,7 +15,6 @@ import { ProductsHero } from "@src/components/organisms/ProductsHero";
 import { SiteTemplate } from "@src/components/templates/SiteTemplate";
 import { Dialog, DialogContent, DialogTitle } from "@src/components/ui/dialog";
 import type { ProductType } from "@src/domain/types/product-type";
-import { SITE } from "@src/lib/site-config";
 import { pauseScroll, resumeScroll } from "@src/lib/smooth-scroll";
 
 const PRODUCT_PARAM = "produto";
@@ -54,7 +53,7 @@ export const ProdutosPage = () => {
 
   return (
     <SiteTemplate>
-      <ProductsHero />
+      <ProductsHero photo={projectsService.photo("cacador", "perfect-150")} />
       <ProductCatalog
         options={productsService.filterOptions()}
         filter={filter}
@@ -64,12 +63,6 @@ export const ProdutosPage = () => {
       />
       <FinishConfigurator finishes={finishesService.list()} />
       <PerformanceSection />
-      <CtaBand
-        title="Encontre a Perfect mais perto da sua obra."
-        primary={{ label: "Falar no WhatsApp", href: SITE.whatsappUrl }}
-        secondary={{ label: "Onde comprar", href: SITE.whereToBuyUrl }}
-      />
-
       <Dialog open={isOpen} onOpenChange={(open) => !open && closeProduct()}>
         <DialogContent
           ref={popupRef}

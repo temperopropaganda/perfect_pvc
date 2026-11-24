@@ -16,7 +16,7 @@ export const ManifestoSection = ({ photo }: ManifestoSectionProps) => {
             as="h2"
             text="O silêncio também é *uma forma de luxo.*"
             className="text-display max-w-[12ch] text-[clamp(2.4rem,4.6vw,4.75rem)]"
-            emphasisClassName="text-graphite-400"
+            emphasisClassName="text-gold-600"
           />
           <Reveal delay={0.2}>
             <p className="text-lead max-w-[38ch] text-muted-foreground">

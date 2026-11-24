@@ -88,7 +88,7 @@ export const SystemsTrack = ({ items }: SystemsTrackProps) => {
             </p>
             <Link
               to="/produtos"
-              className="group inline-flex items-center gap-2 self-start text-sm font-medium"
+              className="group inline-flex items-center gap-2 self-start text-sm font-medium text-blue-700"
             >
               <span className="link-line">Ver todos os produtos</span>
               <ArrowRight
@@ -114,7 +114,7 @@ export const SystemsTrack = ({ items }: SystemsTrackProps) => {
                 />
               </div>
             </div>
-            <div className="flex items-start justify-between gap-4 border-t border-graphite-300 pt-4">
+            <div className="flex items-start justify-between gap-4 border-t border-blue-700 pt-4">
               <div className="flex flex-col gap-1">
                 <span className="font-display text-2xl font-light tracking-[-0.02em]">
                   {item.name}

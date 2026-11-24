@@ -1,6 +1,7 @@
 import { Droplets, Layers, Leaf, ShieldCheck, Wind, type LucideIcon } from "lucide-react";
 
 import { Reveal } from "@src/components/atoms/Reveal";
+import { publicUrl } from "@src/lib/public-url";
 
 type Performance = {
   icon: LucideIcon;
@@ -38,7 +39,7 @@ export const PerformanceSection = () => {
       className="dark relative overflow-hidden bg-background py-24 text-foreground md:py-36"
     >
       <img
-        src="/images/acervo/perfil-detalhe-2400.webp"
+        src={publicUrl("/images/acervo/perfil-detalhe-2400.webp")}
         alt=""
         aria-hidden="true"
         loading="lazy"
@@ -63,7 +64,7 @@ export const PerformanceSection = () => {
                 delay={index * 0.08}
                 className="glass-dark flex flex-col gap-10 rounded-3xl p-7 text-white"
               >
-                <Icon aria-hidden="true" className="size-7 text-ice" />
+                <Icon aria-hidden="true" className="size-7 text-gold-300" />
                 <div className="flex flex-col gap-1">
                   <span className="font-display text-[clamp(2.4rem,4vw,3.5rem)] font-light leading-none tracking-[-0.045em]">
                     {item.value}

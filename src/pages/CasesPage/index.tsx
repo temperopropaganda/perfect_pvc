@@ -2,14 +2,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
 
 import { useDocumentTitle } from "@src/application/hooks/useDocumentTitle";
-import { casesService } from "@src/application/services/cases-service";
+import { libraryPhoto } from "@src/application/services/library-photos";
 import { projectsService } from "@src/application/services/projects-service";
 import type { PictureSource } from "@src/components/atoms/Picture";
-import { ArchiveIndex } from "@src/components/organisms/ArchiveIndex";
 import { ClosingCta } from "@src/components/organisms/ClosingCta";
 import { PageIntro } from "@src/components/organisms/PageIntro";
 import { ProjectChapter } from "@src/components/organisms/ProjectChapter";
-import { ProjectsNav } from "@src/components/organisms/ProjectsNav";
 import { ProjectViewer } from "@src/components/organisms/ProjectViewer";
 import { SiteTemplate } from "@src/components/templates/SiteTemplate";
 import { Dialog, DialogContent, DialogTitle } from "@src/components/ui/dialog";
@@ -18,8 +16,6 @@ import { pauseScroll, resumeScroll } from "@src/lib/smooth-scroll";
 
 const PROJECT_PARAM = "projeto";
 const PHOTO_PARAM = "foto";
-// Parâmetro antigo de link direto para uma obra do arquivo; continua funcionando.
-const CASE_PARAM = "case";
 
 const photo = projectsService.photo;
 
@@ -37,6 +33,23 @@ const PICKS: Record<string, [PictureSource, PictureSource]> = {
     photo("pequeno-paraiso", "perfect-012"),
   ],
   videira: [photo("videira", "perfect-025"), photo("videira", "perfect-013")],
+  curva: [photo("curva", "perfect-14"), photo("curva", "perfect-41")],
+  "piscina-coberta": [
+    photo("piscina-coberta", "primeira-casa-perfect-103"),
+    photo("piscina-coberta", "primeira-casa-perfect-45"),
+  ],
+  grafite: [
+    photo("grafite", "segunda-casa-perfect-56"),
+    photo("grafite", "segunda-casa-perfect-48"),
+  ],
+  "treze-tilias": [
+    photo("treze-tilias", "casa02trezetilias-09"),
+    photo("treze-tilias", "casa02trezetilias-29"),
+  ],
+  pergolado: [
+    photo("pergolado", "terceira-casa-perfect-10"),
+    photo("pergolado", "terceira-casa-perfect-19"),
+  ],
 };
 
 type ViewerData = {
@@ -56,41 +69,12 @@ export const CasesPage = () => {
     "Projetos residenciais com esquadrias em PVC Perfect: fotos, sistemas e acabamentos de cada obra.",
   );
   const [params, setParams] = useSearchParams();
-  const [filter, setFilter] = useState("todos");
   const [lastViewer, setLastViewer] = useState<ViewerData | null>(null);
   const popupRef = useRef<HTMLDivElement>(null);
 
   const projects = projectsService.list();
-  const covered = projectsService.coveredCaseSlugs();
-  const archive = useMemo(
-    () => casesService.list().filter((item) => !covered.includes(item.slug)),
-    [covered],
-  );
-  const archiveItems = useMemo(
-    () =>
-      filter === "todos"
-        ? archive
-        : archive.filter((item) => item.categories.some((category) => category === filter)),
-    [archive, filter],
-  );
-  const filters = useMemo(
-    () => [
-      { value: "todos", label: "Todas", count: archive.length },
-      ...casesService
-        .filterOptions()
-        .filter((option) => option.value !== "todos")
-        .map((option) => ({
-          value: option.value,
-          label: option.label,
-          count: archive.filter((item) => item.categories.some((c) => c === option.value)).length,
-        }))
-        .filter((option) => option.count > 0),
-    ],
-    [archive],
-  );
 
   const projectSlug = params.get(PROJECT_PARAM);
-  const caseSlug = params.get(CASE_PARAM);
   const photoIndex = Number(params.get(PHOTO_PARAM) ?? 0) || 0;
 
   const viewer = useMemo<ViewerData | null>(() => {
@@ -104,20 +88,8 @@ export const CasesPage = () => {
         photos: project.photos,
       };
     }
-    const item = caseSlug
-      ? casesService.list().find((entry) => entry.slug === caseSlug)
-      : undefined;
-    if (item) {
-      return {
-        key: item.slug,
-        title: item.title,
-        meta: joinMeta(item.place, item.year),
-        summary: item.summary,
-        photos: [{ src: item.image, alt: item.imageAlt, width: 1920, height: 1280 }],
-      };
-    }
     return null;
-  }, [projectSlug, caseSlug]);
+  }, [projectSlug]);
 
   const isOpen = viewer !== null;
   const shown = viewer ?? lastViewer;
@@ -171,13 +143,9 @@ export const CasesPage = () => {
       <PageIntro
         label="Cases"
         title="Cada obra, uma *paisagem própria.*"
-        text="Projetos residenciais fotografados com esquadrias Perfect e o arquivo de obras publicadas no site."
-        meta={[
-          `${projects.length} projetos`,
-          `${photoTotal} fotografias`,
-          `${archive.length} obras no arquivo`,
-        ]}
-        photo={photo("bosque", "dronebosque-8")}
+        text="Projetos residenciais fotografados com esquadrias Perfect, com todas as fotos de cada obra."
+        meta={[`${projects.length} projetos`, `${photoTotal} fotografias`]}
+        photo={libraryPhoto("piscina-fachada-pedra")}
       />
 
       <div className="bg-background">
@@ -186,7 +154,6 @@ export const CasesPage = () => {
           return (
             <ProjectChapter
               key={project.slug}
-              index={index}
               project={project}
               picks={picks}
               reverse={index % 2 === 1}
@@ -195,20 +162,6 @@ export const CasesPage = () => {
           );
         })}
       </div>
-      <ProjectsNav
-        items={projects.map((project) => ({
-          slug: project.slug,
-          label: project.name.replace("Casa ", ""),
-        }))}
-      />
-
-      <ArchiveIndex
-        items={archiveItems}
-        filters={filters}
-        filter={filter}
-        onFilterChange={setFilter}
-        onSelect={(slug) => setParams({ [CASE_PARAM]: slug }, { preventScrollReset: true })}
-      />
 
       <ClosingCta
         label="Seu projeto"

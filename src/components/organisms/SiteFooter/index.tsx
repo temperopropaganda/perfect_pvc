@@ -5,6 +5,7 @@ import { Link } from "react-router";
 import { Logo } from "@src/components/atoms/Logo";
 import { VariableProximity } from "@src/components/atoms/VariableProximity";
 import { NAV_ITEMS, SITE } from "@src/lib/site-config";
+import { publicUrl } from "@src/lib/public-url";
 
 const linkClass = "link-line text-graphite-300 transition-colors duration-300 hover:text-white";
 
@@ -84,7 +85,7 @@ export const SiteFooter = () => {
               Facebook
             </a>
             <img
-              src="/brand/selo-janela-qualificada.png"
+              src={publicUrl("/brand/selo-janela-qualificada.png")}
               alt="Selo Janela Qualificada ASPEC PVC"
               loading="lazy"
               width={650}

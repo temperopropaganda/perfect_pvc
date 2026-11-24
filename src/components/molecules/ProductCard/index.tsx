@@ -1,7 +1,9 @@
 import { Plus } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router";
 
 import { OpeningIcon, type OpeningIconType } from "@src/components/atoms/OpeningIcon";
+import { publicUrl } from "@src/lib/public-url";
 import { cn } from "@src/lib/utils";
 
 export type ProductCardData = {
@@ -17,8 +19,13 @@ type ProductCardProps = {
   className?: string;
 } & ({ to: string } | { onSelect: (slug: string) => void });
 
+// Sem hover (telas de toque), o ícone abre e fecha sozinho enquanto o card está na tela.
+const isTouchOnly = () =>
+  typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
+
 export const ProductCard = (props: ProductCardProps) => {
   const { product, className } = props;
+  const [touchOnly] = useState(isTouchOnly);
   const classes = cn(
     "group relative flex flex-col overflow-hidden rounded-3xl bg-card text-left text-card-foreground",
     "shadow-[0_0_0_1px_rgb(0_0_0_/_0.05),0_2px_4px_rgb(30_32_70_/_0.04)] transition-shadow duration-500 ease-glide",
@@ -29,17 +36,14 @@ export const ProductCard = (props: ProductCardProps) => {
 
   const content = (
     <>
-      <div className="relative flex aspect-[4/3.6] items-center justify-center overflow-hidden bg-[radial-gradient(120%_90%_at_50%_100%,var(--ice-mist),var(--card)_70%)]">
-        <span
-          aria-hidden="true"
-          className="absolute aspect-square w-[58%] rounded-full bg-ice/55 transition-transform duration-700 ease-glide group-hover:scale-110"
-        />
+      <div className="relative flex aspect-[4/3.6] items-center justify-center overflow-hidden">
         <OpeningIcon
           type={product.opening}
+          autoplay={touchOnly}
           className="absolute left-5 top-5 size-9 text-foreground/75"
         />
         <img
-          src={product.mockup}
+          src={publicUrl(product.mockup)}
           alt=""
           loading="lazy"
           className="relative h-[68%] w-auto max-w-[78%] object-contain drop-shadow-[0_24px_24px_rgb(30_32_70_/_0.16)] transition-transform duration-700 ease-glide group-hover:-translate-y-2 group-hover:scale-[1.04]"

@@ -7,11 +7,13 @@ const { Janelas, Portas, Acessorios } = ProductCategoryEnum;
 const BASIC_COLORS = "Branco, Embero e Preto";
 
 // Dados técnicos copiados das páginas de produto do site atual (perfectpvc.com.br/produtos).
+// Cada sistema fica em uma categoria só, a do mockup do card: correr, oscilo-batente e giro
+// aparecem como janela, mesmo existindo também em versão porta.
 const PRODUCTS: ProductType[] = [
   {
     slug: "correr",
     name: "Correr",
-    categories: [Janelas, Portas],
+    categories: [Janelas],
     opening: "correr",
     summary: "Varandas e grandes vãos",
     mockup: "/images/mockups/correr.webp",
@@ -39,7 +41,7 @@ const PRODUCTS: ProductType[] = [
   {
     slug: "oscilo-batente",
     name: "Oscilo-batente",
-    categories: [Janelas, Portas],
+    categories: [Janelas],
     opening: "oscilo-batente",
     summary: "Gira e tomba para ventilar",
     mockup: "/images/mockups/oscilo-batente.webp",
@@ -63,7 +65,7 @@ const PRODUCTS: ProductType[] = [
   {
     slug: "giro",
     name: "Giro",
-    categories: [Janelas, Portas],
+    categories: [Janelas],
     opening: "giro",
     summary: "Abre para dentro ou para fora",
     mockup: "/images/mockups/giro.webp",
@@ -163,7 +165,7 @@ const PRODUCTS: ProductType[] = [
   {
     slug: "camarao",
     name: "Camarão",
-    categories: [Portas, Janelas],
+    categories: [Portas],
     opening: "camarao",
     summary: "O vão aberto por inteiro",
     mockup: "/images/mockups/camarao.webp",

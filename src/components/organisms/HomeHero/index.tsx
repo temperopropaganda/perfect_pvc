@@ -15,6 +15,7 @@ type HomeHeroProps = {
 export const HomeHero = ({ photo }: HomeHeroProps) => {
   const root = useRef<HTMLElement>(null);
   const frame = useRef<HTMLDivElement>(null);
+  const parallax = useRef<HTMLDivElement>(null);
   const media = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const [titleReady, setTitleReady] = useState(false);
@@ -48,9 +49,10 @@ export const HomeHero = ({ photo }: HomeHeroProps) => {
           1.6,
         );
 
-      gsap.to(media.current, {
+      // O parallax fica numa camada própria para não disputar o scale com a abertura.
+      gsap.to(parallax.current, {
         yPercent: 14,
-        scale: 1.16,
+        scale: 1.1,
         ease: "none",
         scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
       });
@@ -71,8 +73,10 @@ export const HomeHero = ({ photo }: HomeHeroProps) => {
       className="dark relative h-[100svh] min-h-[640px] overflow-hidden bg-scrim text-foreground"
     >
       <div ref={frame} className="absolute inset-0 overflow-hidden">
-        <div ref={media} className="absolute inset-0 scale-[1.06] will-change-transform">
-          <Picture {...photo} priority sizes="100vw" className="object-[42%_50%]" />
+        <div ref={parallax} className="absolute inset-0 will-change-transform">
+          <div ref={media} className="absolute inset-0 scale-[1.06] will-change-transform">
+            <Picture {...photo} priority sizes="100vw" className="object-[42%_50%]" />
+          </div>
         </div>
         <span className="absolute inset-0 bg-linear-to-t from-scrim/85 via-scrim/20 to-scrim/35" />
         <span className="absolute inset-y-0 left-0 w-2/3 bg-linear-to-r from-scrim/45 to-transparent" />

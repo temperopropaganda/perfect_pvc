@@ -5,7 +5,6 @@ import { gsap, useGSAP } from "@src/lib/gsap";
 import { MOTION } from "@src/lib/motion";
 import { prefersReducedMotion } from "@src/lib/smooth-scroll";
 
-// Resultados de ensaio publicados no catálogo Perfect 2026 (página "Certificação").
 const RESULTS = [
   { value: "Classe 4", title: "Permeabilidade ao ar", norm: "UNE-EN 12207 e UNE-EN 1026" },
   { value: "E750", title: "Estanqueidade à água", norm: "UNE-EN 1027 e UNE-EN 12208" },
@@ -59,12 +58,11 @@ export const CertificationBand = () => {
     >
       <div className="site-container flex flex-col gap-20 md:gap-28">
         <div className="grid gap-8 md:grid-cols-12">
-          <span className="text-label text-graphite-400 md:col-span-3">Certificação</span>
           <RevealText
             as="h2"
             text="Ensaiadas até o *grau máximo.*"
             className="text-display text-[clamp(2.4rem,6vw,6.5rem)] md:col-span-9"
-            emphasisClassName="text-sky-300"
+            emphasisClassName="text-gold-300"
           />
         </div>
 

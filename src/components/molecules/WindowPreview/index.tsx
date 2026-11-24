@@ -9,6 +9,7 @@ import {
   type WindowSystemType,
 } from "@src/components/molecules/WindowPreview/window-systems";
 import { cn } from "@src/lib/utils";
+import { publicUrl } from "@src/lib/public-url";
 
 import "@src/components/molecules/WindowPreview/window-preview.css";
 
@@ -70,7 +71,7 @@ export const WindowPreview = ({
         </span>
         <div className="wp-window">
           <span className="wp-view">
-            <img src={view} alt="" loading="lazy" decoding="async" />
+            <img src={publicUrl(view)} alt="" loading="lazy" decoding="async" />
           </span>
           <WindowProfile tier="frame" />
           {layout.sliding && <WindowProfile tier="track" className="wp-track" />}

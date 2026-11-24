@@ -1,6 +1,7 @@
 import type { PhotoType } from "@src/domain/types/photo-type";
 
 // Acervo de fotos da Perfect (HD "Fotos Digitais/Perfect PVC"), selecionado em 2026-11.
+// Origem de cada arquivo: design/fotos/origem-2026-11.json.
 // Versões WebP em public/images/acervo/<nome>-{800,1400,2400}.webp.
 const LIBRARY_PHOTOS = {
   "casa-crepusculo": {
@@ -50,6 +51,246 @@ const LIBRARY_PHOTOS = {
     width: 800,
     height: 533,
     alt: "Casa com panos de vidro voltados para a piscina e o jardim",
+  },
+  "quarto-janelas-jardim": {
+    src: "/images/acervo/quarto-janelas-jardim",
+    width: 800,
+    height: 533,
+    alt: "Quarto com janelas do piso ao teto voltadas para o jardim",
+  },
+  "fachada-quadriculada": {
+    src: "/images/acervo/fachada-quadriculada",
+    width: 800,
+    height: 533,
+    alt: "Fachada branca com pano de vidro quadriculado",
+  },
+  "fachada-neoclassica": {
+    src: "/images/acervo/fachada-neoclassica",
+    width: 800,
+    height: 533,
+    alt: "Fachada neoclássica branca com porta preta sob céu azul",
+  },
+  "piscina-fachada-pedra": {
+    src: "/images/acervo/piscina-fachada-pedra",
+    width: 800,
+    height: 533,
+    alt: "Piscina diante da casa de pedra e vidro, com a varanda aberta",
+  },
+  "varanda-piscina-gourmet": {
+    src: "/images/acervo/varanda-piscina-gourmet",
+    width: 800,
+    height: 533,
+    alt: "Varanda gourmet integrada à piscina por portas de vidro",
+  },
+  "estar-vista-palmeiras": {
+    src: "/images/acervo/estar-vista-palmeiras",
+    width: 800,
+    height: 533,
+    alt: "Estar envidraçado com vista para as palmeiras",
+  },
+  "estar-canto-envidracado": {
+    src: "/images/acervo/estar-canto-envidracado",
+    width: 800,
+    height: 533,
+    alt: "Sala com canto inteiro de vidro voltado para o jardim",
+  },
+  "janela-pe-direito": {
+    src: "/images/acervo/janela-pe-direito",
+    width: 533,
+    height: 800,
+    alt: "Janela alta no pé-direito duplo ao fim da tarde",
+  },
+  "jantar-patio-interno": {
+    src: "/images/acervo/jantar-patio-interno",
+    width: 800,
+    height: 533,
+    alt: "Jantar com vista para o pátio interno pelas portas de vidro",
+  },
+  "banheira-janela": {
+    src: "/images/acervo/banheira-janela",
+    width: 533,
+    height: 800,
+    alt: "Banheira diante de janela do piso ao teto",
+  },
+  "sala-pano-vidro": {
+    src: "/images/acervo/sala-pano-vidro",
+    width: 800,
+    height: 533,
+    alt: "Sala vista de fora através do grande pano de vidro",
+  },
+  "fachada-anoitecer-piscina": {
+    src: "/images/acervo/fachada-anoitecer-piscina",
+    width: 800,
+    height: 533,
+    alt: "Casa iluminada ao anoitecer, refletida na piscina",
+  },
+  "casa-anoitecer": {
+    src: "/images/acervo/casa-anoitecer",
+    width: 800,
+    height: 533,
+    alt: "Fachada envidraçada ao anoitecer com as luzes acesas",
+  },
+  "varanda-noite": {
+    src: "/images/acervo/varanda-noite",
+    width: 800,
+    height: 533,
+    alt: "Varanda iluminada à noite com portas de vidro abertas",
+  },
+  "piscina-casa-branca": {
+    src: "/images/acervo/piscina-casa-branca",
+    width: 800,
+    height: 533,
+    alt: "Piscina diante da casa branca com portas de vidro",
+  },
+  "varanda-piscina-palmeiras": {
+    src: "/images/acervo/varanda-piscina-palmeiras",
+    width: 800,
+    height: 533,
+    alt: "Varanda com mesa ao lado da piscina e das palmeiras",
+  },
+  "porta-correr-vista": {
+    src: "/images/acervo/porta-correr-vista",
+    width: 533,
+    height: 800,
+    alt: "Porta de correr aberta para a varanda e o vale",
+  },
+  "drone-piscina": {
+    src: "/images/acervo/drone-piscina",
+    width: 800,
+    height: 450,
+    alt: "Vista aérea de casa branca com piscina",
+  },
+  "fachada-piscina-deck": {
+    src: "/images/acervo/fachada-piscina-deck",
+    width: 800,
+    height: 450,
+    alt: "Fachada térrea com piscina e espreguiçadeiras",
+  },
+  "fachada-porta-correr-jardim": {
+    src: "/images/acervo/fachada-porta-correr-jardim",
+    width: 800,
+    height: 533,
+    alt: "Mulher diante da fachada com portas de correr e jardim",
+  },
+  "janela-luz-tarde": {
+    src: "/images/acervo/janela-luz-tarde",
+    width: 800,
+    height: 533,
+    alt: "Mulher junto à janela de correr na luz da tarde",
+  },
+  "cozinha-porta-correr": {
+    src: "/images/acervo/cozinha-porta-correr",
+    width: 800,
+    height: 533,
+    alt: "Mulher abre a porta de correr da cozinha",
+  },
+  "estar-plantas-janela": {
+    src: "/images/acervo/estar-plantas-janela",
+    width: 800,
+    height: 533,
+    alt: "Estar com plantas e grande janela de vidro",
+  },
+  "jantar-escada-caracol": {
+    src: "/images/acervo/jantar-escada-caracol",
+    width: 800,
+    height: 533,
+    alt: "Jantar com escada caracol e panos de vidro",
+  },
+  "escada-caracol-janela": {
+    src: "/images/acervo/escada-caracol-janela",
+    width: 533,
+    height: 800,
+    alt: "Escada caracol iluminada pela janela alta",
+  },
+  "porta-pivotante-madeira": {
+    src: "/images/acervo/porta-pivotante-madeira",
+    width: 533,
+    height: 800,
+    alt: "Porta pivotante de madeira entreaberta",
+  },
+  "jantar-vista-panoramica": {
+    src: "/images/acervo/jantar-vista-panoramica",
+    width: 800,
+    height: 533,
+    alt: "Jantar com vista panorâmica pelas portas de vidro",
+  },
+  "persiana-vista": {
+    src: "/images/acervo/persiana-vista",
+    width: 800,
+    height: 533,
+    alt: "Janela com persiana integrada voltada para a cidade",
+  },
+  "estar-pe-direito-janela": {
+    src: "/images/acervo/estar-pe-direito-janela",
+    width: 533,
+    height: 800,
+    alt: "Estar com janela quadriculada no pé-direito duplo",
+  },
+  "estar-vista-serra": {
+    src: "/images/acervo/estar-vista-serra",
+    width: 800,
+    height: 533,
+    alt: "Sala ampla com janelas voltadas para a serra",
+  },
+  "fachada-noite-janela": {
+    src: "/images/acervo/fachada-noite-janela",
+    width: 533,
+    height: 800,
+    alt: "Fachada ao anoitecer com uma janela iluminada",
+  },
+  "fachada-moderna-branca": {
+    src: "/images/acervo/fachada-moderna-branca",
+    width: 800,
+    height: 533,
+    alt: "Casa moderna branca com panos de vidro e gramado",
+  },
+  "showroom-marca": {
+    src: "/images/acervo/showroom-marca",
+    width: 800,
+    height: 533,
+    alt: "Painel da Perfect com perfis Kömmerling no showroom",
+  },
+  showroom: {
+    src: "/images/acervo/showroom",
+    width: 800,
+    height: 533,
+    alt: "Showroom da Perfect com esquadrias em exposição",
+  },
+  "estoque-perfis": {
+    src: "/images/acervo/estoque-perfis",
+    width: 800,
+    height: 533,
+    alt: "Estoque de perfis de PVC na fábrica",
+  },
+  "fabrica-maquina": {
+    src: "/images/acervo/fabrica-maquina",
+    width: 800,
+    height: 533,
+    alt: "Operador trabalha na máquina de solda da fábrica",
+  },
+  "fabrica-montagem": {
+    src: "/images/acervo/fabrica-montagem",
+    width: 800,
+    height: 533,
+    alt: "Funcionário da Perfect na montagem das esquadrias",
+  },
+  "fabrica-corte-perfil": {
+    src: "/images/acervo/fabrica-corte-perfil",
+    width: 800,
+    height: 533,
+    alt: "Mãos posicionam o perfil Kömmerling na máquina de corte",
+  },
+  "fabrica-aerea-sede": {
+    src: "/images/acervo/fabrica-aerea-sede",
+    width: 800,
+    height: 450,
+    alt: "Vista aérea da sede nova da Perfect, com a fábrica, o telhado solar e o pátio",
+  },
+  "fabrica-aerea-logo": {
+    src: "/images/acervo/fabrica-aerea-logo",
+    width: 800,
+    height: 450,
+    alt: "Fachada da sede da Perfect com o logotipo e a cobertura de vidro, vista do alto",
   },
 } satisfies Record<string, PhotoType>;
 

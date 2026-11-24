@@ -6,12 +6,14 @@ import { gsap, useGSAP } from "@src/lib/gsap";
 import { prefersReducedMotion } from "@src/lib/smooth-scroll";
 
 // Ajustes finos da seção. Uma única timeline (scrub) controla tudo; as posições abaixo são
-// frações do scroll total da seção fixa (0 = início, 1 = fim).
+// unidades da timeline: de 0 a 1 é a animação (1 = textos prontos) e de 1 a holdEnd é a pausa.
+// scrollLength corresponde a holdEnd inteiro (220% por unidade).
 const REVEAL_END = 0.9; // a foto termina de abrir aqui
 
 const SHOWCASE_CONFIG = {
   // Quanto o usuário rola com a seção fixa. Mais = animação mais lenta.
-  scrollLength: "+=220%",
+  // O trecho final (HOLD_END) é de pausa: a foto e os textos ficam parados enquanto o scroll corre.
+  scrollLength: "+=330%",
   // Suavização do scrub (segundos de atraso em relação ao scroll).
   scrub: 0.8,
   // Recorte inicial da foto: top right bottom left.
@@ -30,6 +32,8 @@ const SHOWCASE_CONFIG = {
     // o fim do scroll, sem trecho morto com a foto aberta e nada na tela.
     copyStart: REVEAL_END * 0.92,
     copyEnd: 1,
+    // Pausa depois dos textos, sem nenhuma animação, para o usuário absorver a cena.
+    holdEnd: 1.5,
   },
 } as const;
 
@@ -121,7 +125,9 @@ export const ShowcaseSection = ({ word, photo, title, text }: ShowcaseSectionPro
             { opacity: 0, y: 16 },
             { opacity: 1, y: 0, ease: "sine.out", duration: at.copyEnd - at.copyStart },
             at.copyStart,
-          );
+          )
+          // 4. Pausa: um trecho vazio que só estende a rolagem com a seção fixa.
+          .to({}, { duration: at.holdEnd - at.copyEnd }, at.copyEnd);
       });
     },
     { scope: root },

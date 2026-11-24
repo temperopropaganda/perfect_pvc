@@ -40,7 +40,8 @@ const PRECISION_FACTS = [
   },
 ];
 
-const FEATURED_SLUGS = ["hortencias", "condominio", "pequeno-paraiso"];
+// Cases do acordeão da Home: seis painéis cabem com folga na largura do desktop.
+const FEATURED_SLUGS = ["cacador", "curva", "piscina-coberta", "grafite", "condominio", "videira"];
 
 export const HomePage = () => {
   useDocumentTitle("Perfect PVC · Esquadrias em PVC de alto padrão");
@@ -60,8 +61,8 @@ export const HomePage = () => {
 
   return (
     <SiteTemplate>
-      <HomeHero photo={photo("cacador", "perfect-166")} />
-      <ManifestoSection photo={photo("hortencias", "perfect-128")} />
+      <HomeHero photo={libraryPhoto("fachada-anoitecer-piscina")} />
+      <ManifestoSection photo={photo("videira", "perfect-013")} />
       <ShowcaseSection
         word="Horizonte"
         photo={libraryPhoto("correr-jardim")}
