@@ -329,6 +329,30 @@ const LIBRARY_PHOTOS = {
     height: 800,
     alt: "Torre residencial com fachada de tijolo e grafite e esquadrias em todos os pavimentos",
   },
+  "torre-classica-fachada": {
+    src: "/images/acervo/torre-classica-fachada",
+    width: 600,
+    height: 800,
+    alt: "Torre residencial clássica de fachada clara e janelas azuladas, vista de baixo contra o céu",
+  },
+  "torre-classica-vista": {
+    src: "/images/acervo/torre-classica-vista",
+    width: 600,
+    height: 800,
+    alt: "Edifício residencial de dez andares com esquadrias de PVC e arcos no térreo",
+  },
+  "agencia-fachada-arcos": {
+    src: "/images/acervo/agencia-fachada-arcos",
+    width: 600,
+    height: 800,
+    alt: "Fachada de agência bancária em dois pavimentos, com arcos no térreo e janelas maxim-ar no andar superior",
+  },
+  "showroom-interior": {
+    src: "/images/acervo/showroom-interior",
+    width: 800,
+    height: 533,
+    alt: "Showroom da Perfect com portas e janelas de exposição sob a cobertura de vidro",
+  },
 } satisfies Record<string, PhotoType>;
 
 export type LibraryPhotoName = keyof typeof LIBRARY_PHOTOS;

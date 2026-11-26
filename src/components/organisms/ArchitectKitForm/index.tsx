@@ -96,7 +96,7 @@ export const ArchitectKitForm = () => {
               </label>
               <button
                 type="submit"
-                className="inline-flex h-13 items-center justify-center self-start rounded-full bg-white px-7 text-[15px] font-medium text-graphite-950 transition-colors duration-500 ease-glide hover:bg-sky-50"
+                className="inline-flex h-13 items-center justify-center self-start rounded-btn bg-white px-7 text-[15px] font-medium text-graphite-950 transition-colors duration-500 ease-glide hover:bg-sky-50"
               >
                 Solicitar o kit
               </button>

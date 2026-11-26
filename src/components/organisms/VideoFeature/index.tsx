@@ -7,9 +7,7 @@ import { publicUrl } from "@src/lib/public-url";
 import { cn } from "@src/lib/utils";
 
 type VideoFeatureProps = {
-  label: string;
   title: string;
-  text: string;
   poster: PictureSource;
   // Arquivo de vídeo em public/. Sem ele, o botão leva para o post do Instagram.
   videoSrc?: string;
@@ -18,9 +16,7 @@ type VideoFeatureProps = {
 };
 
 export const VideoFeature = ({
-  label,
   title,
-  text,
   poster,
   videoSrc,
   fallbackUrl,
@@ -30,15 +26,12 @@ export const VideoFeature = ({
   const dark = tone === "dark";
 
   const playButton = (
-    <span className="flex items-center gap-4">
-      <span className="flex size-16 items-center justify-center rounded-full bg-white text-graphite-950 transition-transform duration-500 ease-glide group-hover:scale-110 md:size-20">
-        <Play aria-hidden="true" className="ml-1 size-6 fill-current" />
-      </span>
-      <span className="text-sm font-medium text-white">
-        {videoSrc ? "Assistir ao vídeo" : "Assistir no Instagram"}
-      </span>
+    <span className="flex size-24 items-center justify-center rounded-full bg-white text-graphite-950 shadow-[0_20px_60px_-20px_var(--scrim)] transition-transform duration-500 ease-glide group-hover:scale-110 md:size-36">
+      <Play aria-hidden="true" className="ml-1.5 size-9 fill-current md:size-14" />
     </span>
   );
+  const playLabel = "Assistir ao vídeo institucional";
+  const centered = "group absolute inset-0 flex items-center justify-center";
 
   return (
     <section
@@ -48,55 +41,54 @@ export const VideoFeature = ({
         dark ? "dark bg-background text-foreground" : "bg-background",
       )}
     >
-      <div className="site-container flex flex-col gap-12">
-        <div className="grid gap-6 md:grid-cols-12 md:items-end">
-          <div className="flex flex-col gap-6 md:col-span-7">
-            <span className="text-label text-muted-foreground">{label}</span>
-            <RevealText
-              as="h2"
-              text={title}
-              className="text-title text-[clamp(2rem,4vw,3.75rem)]"
-              emphasisClassName={dark ? "text-gold-300" : "text-graphite-400"}
-            />
-          </div>
-          <p className="text-[17px] leading-relaxed text-muted-foreground md:col-span-4 md:col-start-9">
-            {text}
-          </p>
+      <div className="flex flex-col gap-10 md:gap-14">
+        <div className="site-container">
+          <RevealText
+            as="h2"
+            text={title}
+            className="text-display text-balance text-center text-[clamp(2.6rem,7vw,7.5rem)] md:text-nowrap"
+            emphasisClassName={dark ? "text-gold-300" : "text-graphite-400"}
+          />
         </div>
 
-        <div className="relative aspect-video overflow-hidden rounded-[24px] bg-graphite-900">
-          {playing && videoSrc ? (
-            <video
-              src={publicUrl(videoSrc)}
-              controls
-              autoPlay
-              playsInline
-              className="absolute inset-0 size-full object-cover"
-            />
-          ) : (
-            <>
-              <Picture {...poster} sizes="100vw" />
-              <span className="absolute inset-0 bg-linear-to-t from-scrim/70 to-scrim/10" />
-              {videoSrc ? (
-                <button
-                  type="button"
-                  onClick={() => setPlaying(true)}
-                  className="group absolute bottom-6 left-6 md:bottom-10 md:left-10"
-                >
-                  {playButton}
-                </button>
-              ) : (
-                <a
-                  href={fallbackUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group absolute bottom-6 left-6 md:bottom-10 md:left-10"
-                >
-                  {playButton}
-                </a>
-              )}
-            </>
-          )}
+        {/* Vídeo vaza da margem padrão, mas não encosta na borda da tela. */}
+        <div className="mx-auto w-full max-w-[1760px] px-(--spacing-gutter)">
+          <div className="relative aspect-video overflow-hidden rounded-[6px] bg-graphite-900 md:aspect-[2/1]">
+            {playing && videoSrc ? (
+              <video
+                src={publicUrl(videoSrc)}
+                controls
+                autoPlay
+                playsInline
+                className="absolute inset-0 size-full object-cover"
+              />
+            ) : (
+              <>
+                <Picture {...poster} sizes="100vw" />
+                <span className="absolute inset-0 bg-scrim/35" />
+                {videoSrc ? (
+                  <button
+                    type="button"
+                    aria-label={playLabel}
+                    onClick={() => setPlaying(true)}
+                    className={centered}
+                  >
+                    {playButton}
+                  </button>
+                ) : (
+                  <a
+                    href={fallbackUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={playLabel}
+                    className={centered}
+                  >
+                    {playButton}
+                  </a>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </section>

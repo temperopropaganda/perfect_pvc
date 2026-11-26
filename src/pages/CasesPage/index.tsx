@@ -6,7 +6,7 @@ import { libraryPhoto } from "@src/application/services/library-photos";
 import { projectsService } from "@src/application/services/projects-service";
 import type { PictureSource } from "@src/components/atoms/Picture";
 import { ClosingCta } from "@src/components/organisms/ClosingCta";
-import { PageIntro } from "@src/components/organisms/PageIntro";
+import { AboutHero } from "@src/components/organisms/AboutHero";
 import { ProjectChapter } from "@src/components/organisms/ProjectChapter";
 import { ProjectViewer } from "@src/components/organisms/ProjectViewer";
 import { SiteTemplate } from "@src/components/templates/SiteTemplate";
@@ -136,16 +136,12 @@ export const CasesPage = () => {
     return () => window.removeEventListener("keydown", onKey, true);
   }, [isOpen, viewer, photoIndex, selectPhoto]);
 
-  const photoTotal = projects.reduce((sum, project) => sum + project.photos.length, 0);
-
   return (
     <SiteTemplate>
-      <PageIntro
-        label="Cases"
+      <AboutHero
         title="Cada obra, uma *paisagem própria.*"
-        text="Projetos residenciais fotografados com esquadrias Perfect, com todas as fotos de cada obra."
-        meta={[`${projects.length} projetos`, `${photoTotal} fotografias`]}
         photo={libraryPhoto("piscina-fachada-pedra")}
+        blur={0}
       />
 
       <div className="bg-background">

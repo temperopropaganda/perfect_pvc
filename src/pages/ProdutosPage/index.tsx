@@ -73,7 +73,7 @@ export const ProdutosPage = () => {
       <GlassTypes />
       <PerformanceSection />
       <VerticalEngineering
-        photos={[libraryPhoto("hotel-serra"), libraryPhoto("edificio-tijolo")]}
+        photos={[libraryPhoto("torre-classica-fachada"), libraryPhoto("agencia-fachada-arcos")]}
         contactUrl={VERTICAL_CONTACT_URL}
       />
       <Dialog open={isOpen} onOpenChange={(open) => !open && closeProduct()}>

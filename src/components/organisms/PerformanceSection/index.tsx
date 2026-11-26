@@ -1,4 +1,4 @@
-import { Droplets, Layers, Leaf, ShieldCheck, Wind, type LucideIcon } from "lucide-react";
+import { Droplets, ShieldCheck, Wind, type LucideIcon } from "lucide-react";
 
 import { Reveal } from "@src/components/atoms/Reveal";
 import { publicUrl } from "@src/lib/public-url";
@@ -11,7 +11,6 @@ type Performance = {
 };
 
 type Feature = {
-  icon: LucideIcon;
   title: string;
   text: string;
 };
@@ -24,11 +23,10 @@ const PERFORMANCE: Performance[] = [
 
 const FEATURES: Feature[] = [
   {
-    icon: Layers,
     title: "Perfis multicâmara",
     text: "Reforço em aço galvanizado e solda por termofusão.",
   },
-  { icon: Leaf, title: "PVC reciclável", text: "Fórmula livre de chumbo, com aditivo anti-UV." },
+  { title: "PVC reciclável", text: "Fórmula livre de chumbo, com aditivo anti-UV." },
 ];
 
 export const PerformanceSection = () => {
@@ -77,21 +75,18 @@ export const PerformanceSection = () => {
           })}
         </div>
 
-        <div className="grid grid-cols-1 gap-8 border-t border-white/15 pt-10 md:grid-cols-2">
-          {FEATURES.map((feature) => {
-            const Icon = feature.icon;
-            return (
-              <div key={feature.title} className="flex items-start gap-4 text-white">
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-white/10">
-                  <Icon aria-hidden="true" className="size-5" />
-                </span>
-                <div className="flex flex-col gap-1">
-                  <span className="font-display text-lg font-semibold">{feature.title}</span>
-                  <span className="text-white/70">{feature.text}</span>
-                </div>
-              </div>
-            );
-          })}
+        <div className="grid grid-cols-1 gap-12 pt-6 md:grid-cols-2 md:gap-8">
+          {FEATURES.map((feature) => (
+            <div key={feature.title} className="flex flex-col gap-5 text-white">
+              <span className="h-px w-full bg-gold-300/60" />
+              <span className="font-display text-[clamp(1.6rem,2.4vw,2.4rem)] font-light leading-tight tracking-[-0.02em]">
+                {feature.title}
+              </span>
+              <span className="max-w-[40ch] text-lg leading-relaxed text-white/70">
+                {feature.text}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </section>

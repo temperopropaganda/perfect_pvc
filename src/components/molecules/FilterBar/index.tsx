@@ -33,7 +33,7 @@ export const FilterBar = <TValue extends string>({
       role="group"
       aria-label={label}
       className={cn(
-        "glass dark:glass-dark inline-flex max-w-full items-center gap-1 overflow-x-auto rounded-full p-1.5 [scrollbar-width:none]",
+        "glass dark:glass-dark inline-flex max-w-full items-center gap-1 overflow-x-auto rounded-xl p-1.5 [scrollbar-width:none]",
         className,
       )}
     >
@@ -46,7 +46,7 @@ export const FilterBar = <TValue extends string>({
             aria-pressed={active}
             onClick={() => onChange(option.value)}
             className={cn(
-              "relative isolate flex h-10 shrink-0 items-center gap-1.5 rounded-full px-4 text-[15px] font-medium transition-colors duration-300",
+              "relative isolate flex h-10 shrink-0 items-center gap-1.5 rounded-btn px-4 text-[15px] font-medium transition-colors duration-300",
               active ? "text-primary-foreground" : "text-foreground/70 hover:text-foreground",
             )}
           >
@@ -54,7 +54,7 @@ export const FilterBar = <TValue extends string>({
               <motion.span
                 layoutId={indicatorId}
                 transition={SPRING}
-                className="absolute inset-0 -z-10 rounded-full bg-primary shadow-[0_8px_20px_-10px_var(--primary)]"
+                className="absolute inset-0 -z-10 rounded-btn bg-primary shadow-[0_8px_20px_-10px_var(--primary)]"
               />
             )}
             <span>{option.label}</span>

@@ -38,21 +38,12 @@ const SEALS: QualitySeal[] = [
 export const QualitySeals = () => (
   <section className="bg-paper py-(--spacing-section)">
     <div className="site-container flex flex-col gap-14 md:gap-20">
-      <div className="grid gap-6 md:grid-cols-12">
-        <span className="text-label text-muted-foreground md:col-span-3">Provas de excelência</span>
-        <div className="flex flex-col gap-6 md:col-span-8">
-          <RevealText
-            as="h2"
-            text="Qualidade não é discurso, *é norma.*"
-            className="text-title text-[clamp(2rem,4vw,3.75rem)]"
-            emphasisClassName="text-graphite-400"
-          />
-          <p className="max-w-[56ch] text-[17px] leading-relaxed text-muted-foreground">
-            Para atestar o rigor técnico, a Perfect submete seus processos a auditorias constantes
-            das instituições mais exigentes do setor.
-          </p>
-        </div>
-      </div>
+      <RevealText
+        as="h2"
+        text="Qualidade não é discurso, *é norma.*"
+        className="text-title text-[clamp(2rem,4vw,3.75rem)]"
+        emphasisClassName="text-graphite-400"
+      />
 
       <ul className="grid gap-4 md:grid-cols-3">
         {SEALS.map((seal, index) => (

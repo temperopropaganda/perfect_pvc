@@ -28,13 +28,13 @@ export const OndeComprarPage = () => {
           `${states.length} estados`,
           "Fábrica em Arroio Trinta (SC)",
         ]}
-        photo={libraryPhoto("fabrica-aerea-sede")}
       />
 
       <SplitCallout
         label="Fábrica e showroom"
         title="Compre direto *de quem fabrica.*"
-        photo={libraryPhoto("fabrica-aerea-logo")}
+        photo={libraryPhoto("fabrica-aerea-sede")}
+        variant="backdrop"
         actions={[
           { label: "Falar no WhatsApp", href: SITE.whatsappUrl },
           { label: "Agendar visita ao showroom", href: SHOWROOM_VISIT_URL },

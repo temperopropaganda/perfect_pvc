@@ -48,15 +48,12 @@ const SEALS: Seal[] = [
 export const FunctionSeals = () => (
   <section className="bg-paper py-(--spacing-section)">
     <div className="site-container flex flex-col gap-14 md:gap-20">
-      <div className="grid gap-6 md:grid-cols-12 md:items-end">
-        <span className="text-label text-muted-foreground md:col-span-3">Em cada perfil</span>
-        <RevealText
-          as="h2"
-          text="Cinco motivos para *viver com PVC.*"
-          className="text-title text-[clamp(2rem,4vw,3.75rem)] md:col-span-9"
-          emphasisClassName="text-graphite-400"
-        />
-      </div>
+      <RevealText
+        as="h2"
+        text="Motivos para *viver com Perfect PVC.*"
+        className="text-title text-[clamp(2rem,4vw,3.75rem)]"
+        emphasisClassName="text-graphite-400"
+      />
 
       <ul className="grid grid-cols-1 gap-px overflow-hidden rounded-3xl bg-border sm:grid-cols-2 lg:grid-cols-5">
         {SEALS.map((seal, index) => {

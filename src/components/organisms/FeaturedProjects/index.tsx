@@ -21,15 +21,11 @@ export const FeaturedProjects = ({ items }: FeaturedProjectsProps) => {
     <section aria-labelledby="cases-titulo" className="bg-background py-(--spacing-section)">
       <div className="site-container flex flex-col gap-16 md:gap-24">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-          <div className="flex flex-col gap-8">
-            <span className="text-label text-muted-foreground">Cases</span>
-            <RevealText
-              as="h2"
-              text={"Arquitetura que\n*olha para fora.*"}
-              className="text-display text-[clamp(2.4rem,6vw,6.5rem)]"
-              emphasisClassName="text-blue-700"
-            />
-          </div>
+          <RevealText
+            as="h2"
+            text="Cases"
+            className="text-display text-[clamp(2.4rem,6vw,6.5rem)]"
+          />
           <Link
             to="/cases"
             className="group inline-flex items-center gap-2 self-start text-sm font-medium md:self-auto"

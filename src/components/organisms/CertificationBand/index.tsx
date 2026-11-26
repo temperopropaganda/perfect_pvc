@@ -68,9 +68,9 @@ export const CertificationBand = () => {
 
         <ul data-results className="grid gap-12 md:grid-cols-3 md:gap-8">
           {RESULTS.map((result) => (
-            <li key={result.title} data-result className="flex flex-col gap-5">
+            <li key={result.title} data-result className="flex flex-col gap-6">
               <span data-rule className="block h-px w-full origin-left bg-white/25" />
-              <span className="text-display max-w-[9ch] text-[clamp(2.4rem,4.4vw,4.5rem)] text-white">
+              <span className="font-display text-[clamp(1.5rem,2.2vw,2.4rem)] font-light leading-tight tracking-[-0.02em] text-white">
                 {result.title}
               </span>
               <span className="flex flex-col gap-1">

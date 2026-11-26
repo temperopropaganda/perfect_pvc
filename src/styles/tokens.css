@@ -97,6 +97,8 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.25);
   --radius-2xl: calc(var(--radius) * 1.5);
+  /* Botões: quase quadrados, como o corte de uma esquadria. */
+  --radius-btn: 0.375rem;
   --radius-3xl: calc(var(--radius) * 2);
   --radius-4xl: calc(var(--radius) * 2.5);
 }

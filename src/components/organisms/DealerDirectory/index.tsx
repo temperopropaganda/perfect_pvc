@@ -42,7 +42,7 @@ export const DealerDirectory = ({ groups }: DealerDirectoryProps) => {
                 aria-pressed={region === option}
                 onClick={() => setRegion(option)}
                 className={cn(
-                  "h-10 rounded-full border px-4 text-sm transition-colors duration-300",
+                  "h-10 rounded-btn border px-4 text-sm transition-colors duration-300",
                   region === option
                     ? "border-primary bg-primary text-primary-foreground"
                     : "border-border text-muted-foreground hover:border-foreground/40",

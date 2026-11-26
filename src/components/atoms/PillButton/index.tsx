@@ -40,7 +40,7 @@ const SIZE_CLASSES = {
 export const PillButton = (props: PillButtonProps) => {
   const { children, variant = "primary", size = "md", icon = "arrow", className } = props;
   const classes = cn(
-    "group/pill inline-flex shrink-0 items-center justify-center gap-2.5 whitespace-nowrap rounded-full font-medium tracking-[0.005em]",
+    "group/pill inline-flex shrink-0 items-center justify-center gap-2.5 whitespace-nowrap rounded-btn font-medium tracking-[0.005em]",
     "transition-[transform,background-color,border-color,color] duration-500 ease-glide active:scale-[0.97]",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
     VARIANT_CLASSES[variant],

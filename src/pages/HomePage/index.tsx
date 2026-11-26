@@ -73,7 +73,7 @@ export const HomePage = () => {
 
   return (
     <SiteTemplate>
-      <HomeHero photo={libraryPhoto("fachada-anoitecer-piscina")} />
+      <HomeHero photo={photo("cacador", "perfect-166")} />
       <ManifestoSection photo={photo("videira", "perfect-013")} />
       <ShowcaseSection
         word="Horizonte"
@@ -96,6 +96,7 @@ export const HomePage = () => {
         label="Showroom"
         title="Venha conhecer a Perfect *de perto.*"
         photo={libraryPhoto("showroom-marca")}
+        variant="banner"
         actions={[
           { label: "Agende sua visita", href: SHOWROOM_VISIT_URL },
           { label: "Saiba mais", to: "/sobre" },
@@ -109,20 +110,14 @@ export const HomePage = () => {
       <SplitCallout
         label="Para arquitetos"
         title="Especifique com *quem fabrica.*"
-        photo={libraryPhoto("perfil-cores")}
         tone="dark"
-        reverse
+        variant="text"
         actions={[{ label: "Espaço do arquiteto", to: "/arquitetos" }]}
-      >
-        <p>
-          Um canal direto com a engenharia da Perfect para compatibilizar projetos, escolher
-          tipologias e solicitar o kit de amostras de perfis e cores.
-        </p>
-      </SplitCallout>
+      />
       <ClosingCta
         label="Orçamento"
         title="Realizar sonhos é o *nosso alto padrão.*"
-        photo={libraryPhoto("fachada-piscina")}
+        photo={libraryPhoto("fachada-anoitecer-piscina")}
         primary={{ label: "Solicitar orçamento", href: SITE.whatsappUrl }}
         secondary={{ label: "Baixar catálogo", href: SITE.catalogUrl }}
       />

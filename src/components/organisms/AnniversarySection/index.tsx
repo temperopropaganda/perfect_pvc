@@ -1,17 +1,12 @@
-import { ArrowUpRight } from "lucide-react";
-
 import { Picture, type PictureSource } from "@src/components/atoms/Picture";
 import { RevealText } from "@src/components/atoms/RevealText";
 
-type AnniversaryLink = { label: string; href: string };
-
 type AnniversarySectionProps = {
   photo: PictureSource;
-  links: AnniversaryLink[];
 };
 
-// Os 10 anos da Perfect (maio de 2026). Fotos e vídeo do evento ainda estão só no Instagram.
-export const AnniversarySection = ({ photo, links }: AnniversarySectionProps) => (
+// Os 10 anos da Perfect (maio de 2026).
+export const AnniversarySection = ({ photo }: AnniversarySectionProps) => (
   <section
     data-nav="dark"
     className="dark overflow-hidden bg-background py-(--spacing-section) text-foreground"
@@ -27,7 +22,7 @@ export const AnniversarySection = ({ photo, links }: AnniversarySectionProps) =>
         </p>
         <RevealText
           as="h2"
-          text="Dez anos construindo *hoje para o amanhã.*"
+          text="Dez anos *e muita história pela frente.*"
           className="text-title text-[clamp(2rem,3.4vw,3.25rem)] text-white"
           emphasisClassName="text-gold-300"
         />
@@ -36,24 +31,6 @@ export const AnniversarySection = ({ photo, links }: AnniversarySectionProps) =>
           Kömmerling homenageou a parceria com uma placa: “celebramos 10 anos de uma parceria sólida
           e inspiradora”.
         </p>
-        <ul className="flex flex-col border-t border-white/15">
-          {links.map((link) => (
-            <li key={link.href} className="border-b border-white/15">
-              <a
-                href={link.href}
-                target="_blank"
-                rel="noreferrer"
-                className="group flex items-center justify-between py-4 text-white"
-              >
-                <span>{link.label}</span>
-                <ArrowUpRight
-                  aria-hidden="true"
-                  className="size-4 transition-transform duration-500 ease-glide group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                />
-              </a>
-            </li>
-          ))}
-        </ul>
       </div>
       <div className="relative aspect-[4/3] overflow-hidden rounded-[24px] md:col-span-6 md:col-start-7">
         <Picture {...photo} sizes="(min-width: 768px) 50vw, 100vw" />

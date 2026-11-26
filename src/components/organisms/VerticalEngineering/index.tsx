@@ -71,35 +71,40 @@ export const VerticalEngineering = ({ photos, contactUrl }: VerticalEngineeringP
           </PillButton>
         </div>
       </div>
-
-      <div className="grid gap-3 md:grid-cols-12 md:gap-2.5">
-        <RevealImage
-          {...photos[0]}
-          sizes="(min-width: 768px) 58vw, 100vw"
-          from="bottom"
-          className="md:col-span-7"
-          frameClassName="aspect-[4/3] rounded-[20px] md:aspect-auto md:h-full"
-        />
-        <RevealImage
-          {...photos[1]}
-          sizes="(min-width: 768px) 40vw, 100vw"
-          from="top"
-          className="md:col-span-5"
-          frameClassName="aspect-[3/4] rounded-[20px]"
-        />
-      </div>
-
-      <ul className="grid gap-x-8 gap-y-10 border-t border-white/15 pt-10 sm:grid-cols-2 lg:grid-cols-5">
-        {PILLARS.map((pillar, index) => (
-          <li key={pillar.title}>
-            <Reveal delay={index * 0.06} className="flex flex-col gap-3">
-              <span className="text-label text-gold-300">0{index + 1}</span>
-              <h3 className="font-display text-lg font-medium text-white">{pillar.title}</h3>
-              <p className="text-sm leading-relaxed text-graphite-300">{pillar.text}</p>
-            </Reveal>
-          </li>
-        ))}
-      </ul>
     </div>
+
+    {/* Mesma largura da lista de pilares: as fotos vazam da margem padrão e alinham com ela. */}
+    <div className="mx-auto mt-16 grid max-w-[1760px] grid-cols-1 gap-3 px-(--spacing-gutter) md:mt-24 md:grid-cols-[2fr_3fr] md:gap-5">
+      <RevealImage
+        {...photos[0]}
+        sizes="(min-width: 768px) 40vw, 100vw"
+        from="bottom"
+        className="md:h-[min(86svh,56rem)]"
+        frameClassName="aspect-[4/5] rounded-[6px] md:aspect-auto md:h-full"
+      />
+      <RevealImage
+        {...photos[1]}
+        sizes="(min-width: 768px) 62vw, 100vw"
+        from="top"
+        className="md:h-[min(86svh,56rem)]"
+        frameClassName="aspect-[4/5] rounded-[6px] md:aspect-auto md:h-full"
+      />
+    </div>
+
+    <ul className="mx-auto mt-24 grid max-w-[1760px] gap-x-[clamp(2rem,4vw,5rem)] gap-y-14 px-(--spacing-gutter) sm:grid-cols-2 lg:mt-28 lg:grid-cols-5">
+      {PILLARS.map((pillar, index) => (
+        <li key={pillar.title}>
+          <Reveal
+            delay={index * 0.06}
+            className="flex h-full flex-col gap-5 border-t border-gold-300/50 pt-6"
+          >
+            <h3 className="font-display text-[clamp(1.3rem,1.6vw,1.75rem)] font-light leading-snug tracking-[-0.02em] text-white">
+              {pillar.title}
+            </h3>
+            <p className="text-base leading-relaxed text-graphite-300">{pillar.text}</p>
+          </Reveal>
+        </li>
+      ))}
+    </ul>
   </section>
 );

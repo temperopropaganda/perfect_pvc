@@ -1,5 +1,3 @@
-import { Quote } from "lucide-react";
-
 import { Reveal } from "@src/components/atoms/Reveal";
 import { RevealText } from "@src/components/atoms/RevealText";
 
@@ -9,9 +7,11 @@ type TestimonialsProps = {
   items: Testimonial[];
 };
 
+// Depoimentos em texto corrido, sem caixas: muito espaço entre eles, uma linha fina azul no topo de
+// cada um e o autor discreto embaixo.
 export const Testimonials = ({ items }: TestimonialsProps) => (
-  <section className="bg-paper py-(--spacing-section)">
-    <div className="site-container flex flex-col gap-14 md:gap-20">
+  <section className="bg-paper py-[clamp(6rem,14svh,11rem)]">
+    <div className="site-container flex flex-col gap-20 md:gap-28">
       <div className="grid gap-6 md:grid-cols-12 md:items-end">
         <span className="text-label text-muted-foreground md:col-span-3">
           Quem mora com Perfect
@@ -24,22 +24,21 @@ export const Testimonials = ({ items }: TestimonialsProps) => (
         />
       </div>
 
-      <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid gap-x-[clamp(2rem,5vw,6rem)] gap-y-20 md:grid-cols-2 md:gap-y-28 lg:grid-cols-3">
         {items.map((item, index) => (
           <li key={item.author}>
             <Reveal
               delay={(index % 3) * 0.08}
-              className="flex h-full flex-col justify-between gap-10 rounded-3xl bg-background p-7 md:p-9"
+              className="flex h-full flex-col gap-14 border-t border-blue-700/25 pt-8"
             >
-              <figure className="flex h-full flex-col justify-between gap-10">
-                <blockquote className="flex flex-col gap-6">
-                  <Quote aria-hidden="true" className="size-6 text-blue-700" />
-                  <p className="font-display text-[clamp(1.25rem,1.7vw,1.5rem)] leading-snug tracking-[-0.02em] text-balance">
+              <figure className="flex h-full flex-col justify-between gap-14">
+                <blockquote>
+                  <p className="font-display text-[clamp(1.5rem,2.1vw,2.1rem)] font-light leading-[1.25] tracking-[-0.025em] text-balance">
                     {item.quote}
                   </p>
                 </blockquote>
-                <figcaption className="flex flex-col gap-0.5 border-t border-border pt-5 text-sm">
-                  <span className="font-medium">{item.author}</span>
+                <figcaption className="text-label flex flex-col gap-1.5">
+                  <span className="text-foreground">{item.author}</span>
                   {item.place && <span className="text-muted-foreground">{item.place}</span>}
                 </figcaption>
               </figure>

@@ -55,12 +55,6 @@ const FOLLOW_UP = {
   text: "Nossa equipe acompanha a obra durante sua construção, para garantir o melhor resultado.",
 };
 
-const ANNIVERSARY_LINKS = [
-  { label: "Fotos da festa de 10 anos", href: INSTAGRAM_POSTS.anniversary[0] },
-  { label: "Vídeo do evento", href: INSTAGRAM_POSTS.anniversary[1] },
-  { label: "Homenagens e bastidores", href: INSTAGRAM_POSTS.anniversary[2] },
-];
-
 export const SobrePage = () => {
   useDocumentTitle(
     "Sobre a Perfect · Esquadrias em PVC",
@@ -122,9 +116,7 @@ export const SobrePage = () => {
       </EditorialSplit>
 
       <VideoFeature
-        label="Vídeo institucional"
         title="Conheça a Perfect *por dentro.*"
-        text="Da fábrica em Arroio Trinta à instalação na obra: o processo que transforma perfis em esquadrias de alto desempenho."
         poster={libraryPhoto("fabrica-maquina")}
         fallbackUrl={INSTAGRAM_POSTS.institutional}
       />
@@ -138,7 +130,8 @@ export const SobrePage = () => {
       <SplitCallout
         label="Showroom"
         title="Veja, toque e abra *antes de escolher.*"
-        photo={libraryPhoto("showroom-marca")}
+        photo={libraryPhoto("showroom-interior")}
+        variant="half"
         reverse
         actions={[
           { label: "Agende sua visita", href: SHOWROOM_VISIT_URL },
@@ -154,7 +147,7 @@ export const SobrePage = () => {
         </p>
       </SplitCallout>
 
-      <AnniversarySection photo={libraryPhoto("placa-10-anos")} links={ANNIVERSARY_LINKS} />
+      <AnniversarySection photo={libraryPhoto("placa-10-anos")} />
 
       <ProcessSteps
         label="Como trabalhamos"
