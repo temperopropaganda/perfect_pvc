@@ -5,7 +5,7 @@ type ScrollCueProps = {
   className?: string;
 };
 
-export const ScrollCue = ({ label = "Role", className }: ScrollCueProps) => {
+export const ScrollCue = ({ label = "Scroll", className }: ScrollCueProps) => {
   return (
     <span aria-hidden="true" className={cn("flex flex-col items-center gap-3", className)}>
       <span className="text-label opacity-70">{label}</span>

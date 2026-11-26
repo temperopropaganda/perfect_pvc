@@ -10,9 +10,39 @@ const pick = (slug: string, name: string): PhotoType => {
   return photo;
 };
 
-// Projetos fotografados pela Perfect (src/assets/images/perfect). Título, ano, resumo e produtos
-// só aparecem quando a mesma obra está publicada em perfectpvc.com.br/obras (cases-service.ts).
+// Projetos fotografados pela Perfect, das obras de 2026 (as três primeiras) para as mais antigas.
+// Originais dos seis primeiros projetos de 2023 em src/assets/images/perfect; os adicionados em
+// 2026-11 ficam só no HD (design/fotos/origem-2026-11.json). Nome provisório e
+// local "a confirmar" quando a pasta de fotos não diz. Título, ano, resumo e produtos
+// só aparecem quando a mesma obra está publicada em perfectpvc.com.br/obras.
 const PROJECTS: ProjectType[] = [
+  {
+    slug: "pe-direito-duplo",
+    name: "Casa Pé-Direito Duplo",
+    place: "Local a confirmar",
+    products: [],
+    cover: pick("pe-direito-duplo", "quinta-casa-perfect-57"),
+    photos: photosOf("pe-direito-duplo"),
+    pendingInfo: true,
+  },
+  {
+    slug: "pedra-madeira",
+    name: "Casa Pedra e Madeira",
+    place: "Local a confirmar",
+    products: [],
+    cover: pick("pedra-madeira", "quarta-casa-perfect-3"),
+    photos: photosOf("pedra-madeira"),
+    pendingInfo: true,
+  },
+  {
+    slug: "perfis-pretos",
+    name: "Casa Perfis Pretos",
+    place: "Local a confirmar",
+    products: [],
+    cover: pick("perfis-pretos", "sexta-casa-perfect-11"),
+    photos: photosOf("perfis-pretos"),
+    pendingInfo: true,
+  },
   {
     slug: "cacador",
     name: "Casa Caçador",
@@ -27,6 +57,15 @@ const PROJECTS: ProjectType[] = [
     pendingInfo: false,
   },
   {
+    slug: "curva",
+    name: "Casa Curva",
+    place: "Local a confirmar",
+    products: [],
+    cover: pick("curva", "perfect-1"),
+    photos: photosOf("curva"),
+    pendingInfo: true,
+  },
+  {
     slug: "bosque",
     name: "Casa Bosque",
     place: "Fraiburgo (SC)",
@@ -36,12 +75,30 @@ const PROJECTS: ProjectType[] = [
     pendingInfo: true,
   },
   {
+    slug: "piscina-coberta",
+    name: "Casa Piscina Coberta",
+    place: "Local a confirmar",
+    products: [],
+    cover: pick("piscina-coberta", "primeira-casa-perfect-41"),
+    photos: photosOf("piscina-coberta"),
+    pendingInfo: true,
+  },
+  {
     slug: "hortencias",
     name: "Casa Hortênsias",
     place: "Fraiburgo (SC)",
     products: [],
     cover: pick("hortencias", "perfect-134"),
     photos: photosOf("hortencias"),
+    pendingInfo: true,
+  },
+  {
+    slug: "grafite",
+    name: "Casa Grafite",
+    place: "Local a confirmar",
+    products: [],
+    cover: pick("grafite", "segunda-casa-perfect-12"),
+    photos: photosOf("grafite"),
     pendingInfo: true,
   },
   {
@@ -58,6 +115,15 @@ const PROJECTS: ProjectType[] = [
     pendingInfo: false,
   },
   {
+    slug: "treze-tilias",
+    name: "Casa Treze Tílias",
+    place: "Treze Tílias (SC)",
+    products: [],
+    cover: pick("treze-tilias", "casa02trezetilias-01"),
+    photos: photosOf("treze-tilias"),
+    pendingInfo: true,
+  },
+  {
     slug: "pequeno-paraiso",
     name: "Casa Pequeno Paraíso",
     title: "Um toque especial na entrada",
@@ -69,6 +135,15 @@ const PROJECTS: ProjectType[] = [
     cover: pick("pequeno-paraiso", "perfect-216"),
     photos: photosOf("pequeno-paraiso"),
     pendingInfo: false,
+  },
+  {
+    slug: "pergolado",
+    name: "Casa Pergolado",
+    place: "Local a confirmar",
+    products: [],
+    cover: pick("pergolado", "terceira-casa-perfect-12"),
+    photos: photosOf("pergolado"),
+    pendingInfo: true,
   },
   {
     slug: "videira",
@@ -85,9 +160,6 @@ const PROJECTS: ProjectType[] = [
   },
 ];
 
-// Obras do arquivo (cases-service.ts) que já aparecem aqui como projeto fotografado.
-const CASE_SLUGS_COVERED = ["sofisticacao", "inovacao-design", "toque-especial", "decoracao-eua"];
-
 export const projectsService = {
   list: (): ProjectType[] => PROJECTS,
 
@@ -95,6 +167,4 @@ export const projectsService = {
     PROJECTS.find((project) => project.slug === slug),
 
   photo: pick,
-
-  coveredCaseSlugs: (): string[] => CASE_SLUGS_COVERED,
 };

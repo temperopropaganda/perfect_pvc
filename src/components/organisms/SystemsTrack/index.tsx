@@ -19,6 +19,7 @@ type SystemsTrackProps = {
 };
 
 // No desktop, a rolagem vertical move a faixa de sistemas na horizontal (seção fixa).
+// Cards em retrato (2:3): no desktop a altura da foto é --system-card-height e a largura deriva dela.
 export const SystemsTrack = ({ items }: SystemsTrackProps) => {
   const root = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
@@ -67,7 +68,7 @@ export const SystemsTrack = ({ items }: SystemsTrackProps) => {
     <section
       ref={root}
       aria-labelledby="sistemas-titulo"
-      className="overflow-hidden bg-graphite-100 py-24 lg:flex lg:h-[100svh] lg:items-center lg:py-0"
+      className="overflow-hidden bg-graphite-100 py-24 [--system-card-height:64svh] lg:flex lg:h-[100svh] lg:items-center lg:py-0"
     >
       <div
         ref={track}
@@ -87,7 +88,7 @@ export const SystemsTrack = ({ items }: SystemsTrackProps) => {
             </p>
             <Link
               to="/produtos"
-              className="group inline-flex items-center gap-2 self-start text-sm font-medium"
+              className="group inline-flex items-center gap-2 self-start text-sm font-medium text-blue-700"
             >
               <span className="link-line">Ver todos os produtos</span>
               <ArrowRight
@@ -102,18 +103,18 @@ export const SystemsTrack = ({ items }: SystemsTrackProps) => {
           <Link
             key={item.slug}
             to={`/produtos?produto=${item.slug}`}
-            className="group flex w-[72vw] shrink-0 snap-start flex-col gap-5 sm:w-[44vw] lg:w-[26vw]"
+            className="group flex w-[64vw] shrink-0 snap-start flex-col gap-5 sm:w-[38vw] lg:w-[calc(var(--system-card-height)*2/3)]"
           >
-            <div className="relative aspect-[3/4] overflow-hidden rounded-[6px] bg-graphite-300 lg:h-[62svh] lg:aspect-auto">
+            <div className="relative aspect-[2/3] overflow-hidden rounded-[6px] bg-graphite-300">
               <div data-system-media className="absolute -inset-x-[10%] inset-y-0">
                 <Picture
                   {...item.photo}
-                  sizes="(min-width: 1024px) 30vw, 75vw"
+                  sizes="(min-width: 1024px) 30vw, 64vw"
                   className="transition-transform duration-[1.4s] ease-glide group-hover:scale-[1.05]"
                 />
               </div>
             </div>
-            <div className="flex items-start justify-between gap-4 border-t border-graphite-300 pt-4">
+            <div className="flex items-start justify-between gap-4 border-t border-blue-700 pt-4">
               <div className="flex flex-col gap-1">
                 <span className="font-display text-2xl font-light tracking-[-0.02em]">
                   {item.name}

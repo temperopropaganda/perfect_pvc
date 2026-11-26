@@ -58,7 +58,7 @@ export const ClosingCta = ({ label, title, photo, primary, secondary }: ClosingC
           as="h2"
           text={title}
           className="text-display max-w-[14ch] text-[clamp(2.8rem,7.5vw,8rem)] text-white"
-          emphasisClassName="text-sky-200"
+          emphasisClassName="text-gold-300"
         />
         <div className="flex flex-wrap gap-3">
           <PillButton href={primary.href} variant="light" size="lg">

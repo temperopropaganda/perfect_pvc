@@ -19,13 +19,14 @@ type RevealImageProps = {
   // Deslocamento vertical da foto dentro da moldura, em %. 0 desliga o parallax.
   parallax?: number;
   // De onde a máscara abre.
-  from?: "bottom" | "center" | "left" | "right";
+  from?: "bottom" | "top" | "center" | "left" | "right";
   caption?: string;
   priority?: boolean;
 };
 
 const CLIP_FROM: Record<NonNullable<RevealImageProps["from"]>, string> = {
   bottom: "inset(100% 0% 0% 0%)",
+  top: "inset(0% 0% 100% 0%)",
   center: "inset(18% 14% 18% 14%)",
   left: "inset(0% 100% 0% 0%)",
   right: "inset(0% 0% 0% 100%)",

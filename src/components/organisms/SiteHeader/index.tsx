@@ -12,7 +12,8 @@ import { NAV_CASES, NAV_ITEMS, NAV_PRODUCTS, SITE, type NavMenuId } from "@src/l
 import { pauseScroll, resumeScroll } from "@src/lib/smooth-scroll";
 import { cn } from "@src/lib/utils";
 
-const PANEL_RADIUS = 22;
+// Concêntrico com o botão de dentro: raio do botão (6) + folga do painel (8).
+const PANEL_RADIUS = 14;
 const CLOSE_DELAY_MS = 160;
 
 const ProductsMenu = ({ onNavigate }: { onNavigate: () => void }) => {
@@ -246,7 +247,7 @@ export const SiteHeader = () => {
               className="flex h-14 items-center gap-2 pl-4 pr-2"
             >
               <Link to="/" aria-label="Perfect, página inicial" className="mr-3 rounded-lg p-1">
-                <Logo className={cn("text-[15px]", dark ? "text-white" : "text-blue-700")} />
+                <Logo className={cn("text-[18px]", dark ? "text-white" : "text-blue-700")} />
               </Link>
               <span aria-hidden="true" className="hidden h-5 w-px bg-foreground/15 md:block" />
               <ul className="hidden items-center md:flex">
@@ -258,7 +259,7 @@ export const SiteHeader = () => {
                         target="_blank"
                         rel="noreferrer"
                         onMouseEnter={scheduleClose}
-                        className="flex items-center gap-1 rounded-full px-3.5 py-2 text-[13px] font-medium tracking-[0.01em] opacity-75 transition-opacity duration-300 hover:opacity-100"
+                        className="flex items-center gap-1 rounded-btn px-3.5 py-2 text-[13px] font-medium tracking-[0.01em] opacity-75 transition-opacity duration-300 hover:opacity-100"
                       >
                         {item.label}
                         <ArrowUpRight aria-hidden="true" className="size-3.5 opacity-60" />
@@ -272,7 +273,7 @@ export const SiteHeader = () => {
                         aria-expanded={item.menu ? menu === item.menu : undefined}
                         className={({ isActive }) =>
                           cn(
-                            "flex items-center gap-1 rounded-full px-3.5 py-2 text-[13px] font-medium tracking-[0.01em] transition-opacity duration-300",
+                            "flex items-center gap-1 rounded-btn px-3.5 py-2 text-[13px] font-medium tracking-[0.01em] transition-opacity duration-300",
                             isActive || menu === item.menu
                               ? "opacity-100"
                               : "opacity-75 hover:opacity-100",
@@ -328,13 +329,13 @@ export const SiteHeader = () => {
 
           <div
             style={{ borderRadius: PANEL_RADIUS }}
-            className="glass pointer-events-auto flex h-14 items-center gap-1 pl-2 pr-1.5 transition-[background-color,border-color] duration-500"
+            className="glass pointer-events-auto box-content flex h-14 shrink-0 items-center gap-2 pl-2 pr-2 transition-[background-color,border-color] duration-500"
           >
             <a
               href={SITE.catalogUrl}
               target="_blank"
               rel="noreferrer"
-              className="hidden items-center gap-1 rounded-full px-3.5 py-2 text-[13px] font-medium opacity-75 transition-opacity duration-300 hover:opacity-100 lg:flex"
+              className="hidden items-center gap-1 rounded-btn px-3.5 py-2 text-[13px] font-medium tracking-[0.01em] opacity-75 transition-opacity duration-300 hover:opacity-100 lg:flex"
             >
               Catálogo
               <ArrowUpRight aria-hidden="true" className="size-3.5 opacity-60" />
@@ -344,7 +345,7 @@ export const SiteHeader = () => {
               target="_blank"
               rel="noreferrer"
               className={cn(
-                "hidden h-10 items-center rounded-[14px] px-4 text-[13px] font-medium transition-colors duration-500 sm:flex",
+                "hidden h-10 items-center rounded-btn px-4 text-[13px] font-medium tracking-[0.01em] transition-colors duration-500 sm:flex",
                 dark
                   ? "bg-white text-graphite-950 hover:bg-sky-100"
                   : "bg-blue-700 text-white hover:bg-blue-600",
@@ -358,7 +359,7 @@ export const SiteHeader = () => {
               aria-expanded={mobileOpen}
               aria-controls="menu-mobile"
               aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
-              className="relative flex size-11 items-center justify-center rounded-full md:hidden"
+              className="relative flex size-11 items-center justify-center rounded-btn md:hidden"
             >
               <span
                 className={cn(
@@ -428,7 +429,7 @@ export const SiteHeader = () => {
                 href={SITE.whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="flex h-13 items-center justify-center rounded-[16px] bg-white text-[15px] font-medium text-graphite-950"
+                className="flex h-13 items-center justify-center rounded-btn bg-white text-[15px] font-medium text-graphite-950"
               >
                 Solicitar orçamento
               </a>

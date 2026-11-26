@@ -29,7 +29,10 @@ export const ProductCatalog = <TValue extends string>({
   const reduce = useReducedMotion();
 
   return (
-    <section aria-label="Catálogo de produtos" className="bg-background pb-8 md:pb-16">
+    <section
+      aria-label="Catálogo de produtos"
+      className="bg-background pb-8 pt-8 md:pb-16 md:pt-10"
+    >
       <div className="mx-auto flex max-w-[1240px] flex-col gap-8 px-5 pb-20 md:px-8 md:pb-24">
         <div className="sticky top-[84px] z-30 flex justify-center md:top-[92px]">
           <FilterBar

@@ -15,6 +15,8 @@ export type FinishOption = {
 
 type FinishConfiguratorProps = {
   finishes: FinishOption[];
+  // Cores sob consulta, sem amostra no configurador.
+  others?: string[];
 };
 
 const SYSTEMS: { type: WindowSystemType; name: string; detail: string }[] = [
@@ -32,7 +34,7 @@ const SYSTEMS: { type: WindowSystemType; name: string; detail: string }[] = [
 const VIEW_PHOTO = "/images/cases/lar-apaixonar.webp";
 
 // Monte a sua: escolha o sistema e a cor; o botão "Ver abertura" mostra o movimento.
-export const FinishConfigurator = ({ finishes }: FinishConfiguratorProps) => {
+export const FinishConfigurator = ({ finishes, others = [] }: FinishConfiguratorProps) => {
   const [system, setSystem] = useState<WindowSystemType>("giro");
   const [finishSlug, setFinishSlug] = useState(finishes[0]?.slug ?? "");
   const [open, setOpen] = useState(false);
@@ -169,6 +171,12 @@ export const FinishConfigurator = ({ finishes }: FinishConfiguratorProps) => {
               Tons ilustrativos. Confira no mostruário.
             </p>
           </fieldset>
+          {others.length > 0 && (
+            <div className="flex flex-col gap-3 border-t border-border pt-6">
+              <span className="text-label text-muted-foreground">Outras possibilidades</span>
+              <p className="text-sm leading-relaxed text-muted-foreground">{others.join(" · ")}</p>
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -7,16 +7,24 @@ const { Janelas, Portas, Acessorios } = ProductCategoryEnum;
 const BASIC_COLORS = "Branco, Embero e Preto";
 
 // Dados técnicos copiados das páginas de produto do site atual (perfectpvc.com.br/produtos).
+// Cada sistema fica em uma categoria só, a do mockup do card: correr, oscilo-batente e giro
+// aparecem como janela, mesmo existindo também em versão porta.
 const PRODUCTS: ProductType[] = [
   {
     slug: "correr",
     name: "Correr",
-    categories: [Janelas, Portas],
+    categories: [Janelas],
     opening: "correr",
     summary: "Varandas e grandes vãos",
     mockup: "/images/mockups/correr.webp",
     photo: "/images/produtos/correr.webp",
     photoAlt: "Porta de correr em PVC aberta para a piscina",
+    portrait: {
+      src: "/images/produtos/retrato/correr",
+      width: 533,
+      height: 800,
+      alt: "Porta de correr de vidro aberta para a varanda com vista para a cidade",
+    },
     highlights: [
       "Múltiplos trilhos",
       "Pequenos, médios e grandes vãos",
@@ -33,12 +41,18 @@ const PRODUCTS: ProductType[] = [
   {
     slug: "oscilo-batente",
     name: "Oscilo-batente",
-    categories: [Janelas, Portas],
+    categories: [Janelas],
     opening: "oscilo-batente",
     summary: "Gira e tomba para ventilar",
     mockup: "/images/mockups/oscilo-batente.webp",
     photo: "/images/produtos/oscilo-batente.webp",
     photoAlt: "Janela oscilo-batente aberta com vista para a cidade",
+    portrait: {
+      src: "/images/produtos/retrato/oscilo-batente",
+      width: 533,
+      height: 800,
+      alt: "Janela oscilo-batente branca basculada no showroom da Perfect",
+    },
     highlights: ["Gira e tomba", "Controle de ventilação", "Limpeza pelo lado de dentro"],
     specs: [
       { label: "Perfil", value: "EuroFine 70" },
@@ -51,12 +65,18 @@ const PRODUCTS: ProductType[] = [
   {
     slug: "giro",
     name: "Giro",
-    categories: [Janelas, Portas],
+    categories: [Janelas],
     opening: "giro",
     summary: "Abre para dentro ou para fora",
     mockup: "/images/mockups/giro.webp",
     photo: "/images/produtos/giro.webp",
     photoAlt: "Portas de giro brancas em sala com piso de mármore",
+    portrait: {
+      src: "/images/produtos/retrato/giro",
+      width: 533,
+      height: 800,
+      alt: "Porta de giro dupla branca com vidros quadriculados",
+    },
     highlights: ["Giro interno ou externo", "Vedação por borracha", "Economia de energia"],
     specs: [
       { label: "Perfil", value: "EuroFine 70" },
@@ -75,6 +95,12 @@ const PRODUCTS: ProductType[] = [
     mockup: "/images/mockups/maxim-ar.webp",
     photo: "/images/produtos/maxim-ar.webp",
     photoAlt: "Janelas maxim-ar pretas abertas em fachada",
+    portrait: {
+      src: "/images/produtos/retrato/maxim-ar",
+      width: 533,
+      height: 800,
+      alt: "Janela maxim-ar branca aberta, vista de baixo",
+    },
     highlights: ["Abertura de 90°", "Controle de ventilação", "Vedação por borracha"],
     specs: [
       { label: "Perfil", value: "EuroFine 70 e ProVent" },
@@ -93,6 +119,12 @@ const PRODUCTS: ProductType[] = [
     mockup: "/images/mockups/fixo.webp",
     photo: "/images/produtos/fixo.webp",
     photoAlt: "Vidro fixo curvo em fachada de sobrado",
+    portrait: {
+      src: "/images/produtos/retrato/fixo",
+      width: 533,
+      height: 800,
+      alt: "Vidro fixo curvo de piso a teto entre cortinas",
+    },
     highlights: ["Pequenos, médios e grandes vãos", "Isolamento termoacústico"],
     specs: [
       { label: "Perfil", value: "EuroFine 70 e ProVent" },
@@ -111,6 +143,12 @@ const PRODUCTS: ProductType[] = [
     mockup: "/images/mockups/pivotante.webp",
     photo: "/images/produtos/pivotante.webp",
     photoAlt: "Porta pivotante de vidro em entrada com pé-direito duplo",
+    portrait: {
+      src: "/images/produtos/retrato/pivotante",
+      width: 533,
+      height: 800,
+      alt: "Porta pivotante amadeirada aberta para a entrada da casa",
+    },
     highlights: [
       "Ferragens embutidas",
       "Múltiplos pontos de travamento",
@@ -127,12 +165,18 @@ const PRODUCTS: ProductType[] = [
   {
     slug: "camarao",
     name: "Camarão",
-    categories: [Portas, Janelas],
+    categories: [Portas],
     opening: "camarao",
     summary: "O vão aberto por inteiro",
     mockup: "/images/mockups/camarao.webp",
     photo: "/images/produtos/camarao.webp",
     photoAlt: "Porta camarão em PVC amadeirado aberta para a varanda",
+    portrait: {
+      src: "/images/produtos/retrato/camarao",
+      width: 533,
+      height: 800,
+      alt: "Porta camarão preta aberta para o jardim florido",
+    },
     highlights: ["Maior abertura do vão", "Ocupa pouco espaço", "Múltiplos pontos de tranca"],
     specs: [
       { label: "Perfil", value: "EuroFine 70" },
@@ -151,6 +195,12 @@ const PRODUCTS: ProductType[] = [
     mockup: "/images/mockups/alcante.webp",
     photo: "/images/produtos/alcante.webp",
     photoAlt: "Portas alçantes em PVC preto no estande da Perfect",
+    portrait: {
+      src: "/images/produtos/retrato/alcante",
+      width: 533,
+      height: 800,
+      alt: "Grandes portas de vidro em pátio interno com piscina",
+    },
     highlights: ["Permite grandes dimensões", "Estanque em clima severo", "Deslizamento leve"],
     specs: [
       { label: "Perfil", value: "Premidoor 76" },

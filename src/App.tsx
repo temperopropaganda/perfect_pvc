@@ -13,6 +13,18 @@ const SobrePage = lazy(() =>
 const CasesPage = lazy(() =>
   import("@src/pages/CasesPage").then((module) => ({ default: module.CasesPage })),
 );
+const OndeComprarPage = lazy(() =>
+  import("@src/pages/OndeComprarPage").then((module) => ({ default: module.OndeComprarPage })),
+);
+const ArquitetosPage = lazy(() =>
+  import("@src/pages/ArquitetosPage").then((module) => ({ default: module.ArquitetosPage })),
+);
+const BlogPage = lazy(() =>
+  import("@src/pages/BlogPage").then((module) => ({ default: module.BlogPage })),
+);
+const BlogPostPage = lazy(() =>
+  import("@src/pages/BlogPostPage").then((module) => ({ default: module.BlogPostPage })),
+);
 
 const AppRoutes = () => {
   const { pathname, hash } = useLocation();
@@ -25,6 +37,10 @@ const AppRoutes = () => {
         <Route path="/produtos" element={<ProdutosPage />} />
         <Route path="/cases" element={<CasesPage />} />
         <Route path="/sobre" element={<SobrePage />} />
+        <Route path="/onde-comprar" element={<OndeComprarPage />} />
+        <Route path="/arquitetos" element={<ArquitetosPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/:slug" element={<BlogPostPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>
@@ -33,7 +49,7 @@ const AppRoutes = () => {
 
 export const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <AppRoutes />
     </BrowserRouter>
   );

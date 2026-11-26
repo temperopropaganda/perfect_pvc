@@ -1,17 +1,22 @@
+import { libraryPhoto } from "@src/application/services/library-photos";
 import { productsService } from "@src/application/services/products-service";
 import { projectsService } from "@src/application/services/projects-service";
 import { CertificationBand } from "@src/components/organisms/CertificationBand";
 import { ClosingCta } from "@src/components/organisms/ClosingCta";
 import { FeaturedProjects } from "@src/components/organisms/FeaturedProjects";
-import { FramedScene } from "@src/components/organisms/FramedScene";
+import { FunctionSeals } from "@src/components/organisms/FunctionSeals";
 import { HomeHero } from "@src/components/organisms/HomeHero";
 import { ManifestoSection } from "@src/components/organisms/ManifestoSection";
 import { PrecisionSection } from "@src/components/organisms/PrecisionSection";
+import { ShowcaseSection } from "@src/components/organisms/ShowcaseSection";
+import { SplitCallout } from "@src/components/organisms/SplitCallout";
 import { SystemsTrack } from "@src/components/organisms/SystemsTrack";
+import { Testimonials } from "@src/components/organisms/Testimonials";
 import { TiltTurnShowcase } from "@src/components/organisms/TiltTurnShowcase";
 import { SiteTemplate } from "@src/components/templates/SiteTemplate";
 import { useDocumentTitle } from "@src/application/hooks/useDocumentTitle";
-import { SITE } from "@src/lib/site-config";
+import { testimonialsService } from "@src/application/services/testimonials-service";
+import { SHOWROOM_VISIT_URL, SITE } from "@src/lib/site-config";
 
 const photo = projectsService.photo;
 
@@ -20,26 +25,35 @@ const PRECISION_FACTS = [
   {
     title: "Tecnologia alemã",
     text: "Perfis exclusivamente Kömmerling, líder mundial em extrusão, com a mesma qualidade encontrada na Europa.",
-    photo: photo("bosque", "casabosquefraiburgo-28"),
+    photo: libraryPhoto("perfil-cores"),
   },
   {
     title: "Cantos soldados por termofusão",
     text: "Cada esquadria vira uma peça única, sem frestas. Fechada, bloqueia ruídos, vento e chuva.",
-    photo: photo("cacador", "perfect-186"),
+    photo: libraryPhoto("perfil-canto"),
   },
   {
     title: "Múltiplas câmaras internas",
     text: "As câmaras quebram a ponte térmica: o calor do sol e o frio não passam para dentro do ambiente.",
-    photo: photo("condominio", "casacondominiofraiburgo-07"),
+    photo: libraryPhoto("perfil-camaras"),
   },
   {
     title: "Performance tropicalizada",
     text: "Aditivos anti-UV suportam a radiação solar brasileira sem alterar a cor dos perfis.",
-    photo: photo("hortencias", "perfect-106"),
+    photo: libraryPhoto("perfil-amadeirado"),
   },
 ];
 
-const FEATURED_SLUGS = ["hortencias", "condominio", "pequeno-paraiso"];
+// Cases do acordeão da Home: seis painéis cabem com folga na largura do desktop. As obras de 2026
+// vêm primeiro, como pedido na revisão de 2026-11-23.
+const FEATURED_SLUGS = [
+  "pe-direito-duplo",
+  "pedra-madeira",
+  "piscina-coberta",
+  "perfis-pretos",
+  "grafite",
+  "cacador",
+];
 
 export const HomePage = () => {
   useDocumentTitle("Perfect PVC · Esquadrias em PVC de alto padrão");
@@ -48,20 +62,22 @@ export const HomePage = () => {
     slug: product.slug,
     name: product.name,
     summary: product.summary,
-    photo: { src: product.photo, alt: product.photoAlt, width: 800, height: 600 },
+    photo: product.portrait ?? {
+      src: product.photo,
+      alt: product.photoAlt,
+      width: 800,
+      height: 600,
+    },
   }));
   const featured = FEATURED_SLUGS.flatMap((slug) => projectsService.findBySlug(slug) ?? []);
 
   return (
     <SiteTemplate>
-      <HomeHero photo={photo("cacador", "perfect-166")} caption="Casa Caçador · Caçador (SC)" />
-      <ManifestoSection
-        wide={photo("hortencias", "perfect-128")}
-        tall={photo("hortencias", "perfect-119")}
-      />
-      <FramedScene
-        photo={photo("bosque", "casabosquefraiburgo-06")}
-        label="Integração sem fronteiras"
+      <HomeHero photo={photo("cacador", "perfect-166")} />
+      <ManifestoSection photo={photo("videira", "perfect-013")} />
+      <ShowcaseSection
+        word="Horizonte"
+        photo={libraryPhoto("correr-jardim")}
         title="O jardim também é sala."
         text="Sistemas de correr conectam ambientes internos e externos com um deslizamento suave."
       />
@@ -72,12 +88,36 @@ export const HomePage = () => {
         title="Um sistema construtivo inteligente."
         facts={PRECISION_FACTS}
       />
+      <FunctionSeals />
       <CertificationBand />
       <FeaturedProjects items={featured} />
+      <Testimonials items={testimonialsService.list()} />
+      <SplitCallout
+        label="Showroom"
+        title="Venha conhecer a Perfect *de perto.*"
+        photo={libraryPhoto("showroom-marca")}
+        variant="banner"
+        actions={[
+          { label: "Agende sua visita", href: SHOWROOM_VISIT_URL },
+          { label: "Saiba mais", to: "/sobre" },
+        ]}
+      >
+        <p>
+          No showroom do novo parque fabril, em Arroio Trinta (SC), você vê os sistemas de abertura,
+          as cores dos perfis e as opções de vidro antes de decidir.
+        </p>
+      </SplitCallout>
+      <SplitCallout
+        label="Para arquitetos"
+        title="Especifique com *quem fabrica.*"
+        tone="dark"
+        variant="text"
+        actions={[{ label: "Espaço do arquiteto", to: "/arquitetos" }]}
+      />
       <ClosingCta
         label="Orçamento"
         title="Realizar sonhos é o *nosso alto padrão.*"
-        photo={photo("cacador", "perfect-191")}
+        photo={libraryPhoto("fachada-anoitecer-piscina")}
         primary={{ label: "Solicitar orçamento", href: SITE.whatsappUrl }}
         secondary={{ label: "Baixar catálogo", href: SITE.catalogUrl }}
       />

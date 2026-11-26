@@ -11,7 +11,7 @@
 - Tailwind CSS v4 (configuração em `src/styles/`)
 - shadcn/ui (`src/components/ui/` é código gerado, não editar)
 - Animação: GSAP + ScrollTrigger (scroll), Motion (entradas e layout), Lenis (scroll suave)
-- 3D: three.js puro em `src/lib/window-scene.ts`, carregado sob demanda (modelo em `public/models/`)
+- 3D: React Three Fiber + drei em `src/components/molecules/WindowModel`, carregado sob demanda (modelo em `public/models/`, fonte do Blender em `design/3d/janela/`)
 - ReactBits em `src/components/atoms/` (GlassSurface, BlurText, ScrollReveal, CountUp, RotatingText, VariableProximity), ajustados para o tsconfig estrito e para export nomeado
 - ESLint e Prettier
 

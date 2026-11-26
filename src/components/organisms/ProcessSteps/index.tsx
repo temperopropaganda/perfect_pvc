@@ -1,8 +1,6 @@
 import { useRef } from "react";
 
-import type { PictureSource } from "@src/components/atoms/Picture";
 import { RevealText } from "@src/components/atoms/RevealText";
-import { RevealImage } from "@src/components/molecules/RevealImage";
 import { gsap, useGSAP } from "@src/lib/gsap";
 import { MOTION } from "@src/lib/motion";
 import { prefersReducedMotion } from "@src/lib/smooth-scroll";
@@ -14,10 +12,9 @@ type ProcessStepsProps = {
   title: string;
   steps: Step[];
   note: Step;
-  photo: PictureSource;
 };
 
-export const ProcessSteps = ({ label, title, steps, note, photo }: ProcessStepsProps) => {
+export const ProcessSteps = ({ label, title, steps, note }: ProcessStepsProps) => {
   const list = useRef<HTMLOListElement>(null);
 
   useGSAP(
@@ -52,12 +49,6 @@ export const ProcessSteps = ({ label, title, steps, note, photo }: ProcessStepsP
               className="text-display text-[clamp(2.4rem,5vw,5.5rem)]"
               emphasisClassName="text-graphite-400"
             />
-            <RevealImage
-              {...photo}
-              sizes="(min-width: 1024px) 38vw, 100vw"
-              frameClassName="aspect-[3/2] rounded-[6px]"
-              className="hidden lg:flex"
-            />
           </div>
         </div>
         <div className="flex flex-col gap-10 lg:col-span-6 lg:col-start-7">
@@ -65,16 +56,18 @@ export const ProcessSteps = ({ label, title, steps, note, photo }: ProcessStepsP
             {steps.map((step, index) => (
               <li
                 key={step.title}
-                className="group grid grid-cols-[3.5rem_1fr] gap-4 border-t border-graphite-300 py-8 md:grid-cols-[5rem_1fr]"
+                className="group grid grid-cols-[3.5rem_1fr] gap-4 border-t border-graphite-300 py-12 md:grid-cols-[6.5rem_1fr] md:py-[clamp(4rem,11svh,7rem)]"
               >
-                <span className="text-display text-[clamp(1.8rem,3vw,2.75rem)] text-graphite-400 transition-colors duration-500 group-hover:text-blue-700">
+                <span className="text-display text-[clamp(2.2rem,4vw,3.75rem)] text-graphite-400 transition-colors duration-500 group-hover:text-blue-700">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div className="flex flex-col gap-2">
-                  <h3 className="font-display text-2xl font-light tracking-[-0.02em]">
+                  <h3 className="font-display text-[clamp(1.6rem,2.4vw,2.5rem)] font-light tracking-[-0.02em]">
                     {step.title}
                   </h3>
-                  <p className="max-w-[44ch] text-muted-foreground">{step.text}</p>
+                  <p className="max-w-[40ch] text-lg leading-relaxed text-muted-foreground md:text-xl">
+                    {step.text}
+                  </p>
                 </div>
               </li>
             ))}

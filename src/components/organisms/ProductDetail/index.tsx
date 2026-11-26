@@ -2,6 +2,7 @@ import { Check } from "lucide-react";
 
 import { OpeningIcon, type OpeningIconType } from "@src/components/atoms/OpeningIcon";
 import { PillButton } from "@src/components/atoms/PillButton";
+import { publicUrl } from "@src/lib/public-url";
 import { SITE } from "@src/lib/site-config";
 
 export type ProductDetailData = {
@@ -27,7 +28,7 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
     >
       <div className="relative min-h-[260px] md:min-h-[620px]">
         <img
-          src={product.photo}
+          src={publicUrl(product.photo)}
           alt={product.photoAlt}
           className="absolute inset-0 h-full w-full object-cover"
         />

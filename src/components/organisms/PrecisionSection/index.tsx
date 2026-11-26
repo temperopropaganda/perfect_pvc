@@ -1,9 +1,8 @@
-import { useRef, useState, type ReactNode } from "react";
+import { type CSSProperties, useRef, useState } from "react";
 
-import type { PictureSource } from "@src/components/atoms/Picture";
+import { Picture, type PictureSource } from "@src/components/atoms/Picture";
 import { RevealText } from "@src/components/atoms/RevealText";
-import { RevealImage } from "@src/components/molecules/RevealImage";
-import { ScrollTrigger, useGSAP } from "@src/lib/gsap";
+import { gsap, ScrollTrigger, useGSAP } from "@src/lib/gsap";
 import { cn } from "@src/lib/utils";
 
 type PrecisionFact = {
@@ -16,37 +15,46 @@ type PrecisionSectionProps = {
   label: string;
   title: string;
   facts: PrecisionFact[];
-  // Elemento opcional (ex.: cena 3D) mostrado acima das fotos.
-  visual?: ReactNode;
 };
 
-const precisionItems = (scope: HTMLElement | null) =>
-  scope ? Array.from(scope.querySelectorAll<HTMLElement>("[data-precision-item]")) : [];
+const PHOTO_SIZES = "(min-width: 1024px) 45vw, 100vw";
 
-// Cada foto da coluna direita acende o atributo correspondente na coluna fixa da esquerda.
-export const PrecisionSection = ({ label, title, facts, visual }: PrecisionSectionProps) => {
+// No desktop, a seção fica fixa enquanto a rolagem percorre os atributos: cada trecho da
+// rolagem acende um tópico e troca a foto do quadro com fade. No mobile, cada tópico mostra a
+// própria foto, em sequência.
+export const PrecisionSection = ({ label, title, facts }: PrecisionSectionProps) => {
   const root = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
 
   useGSAP(
     () => {
-      precisionItems(root.current).forEach((element, index) =>
-        ScrollTrigger.create({
-          trigger: element,
-          start: "top 60%",
-          end: "bottom 60%",
-          onToggle: (self) => self.isActive && setActive(index),
-        }),
-      );
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 1024px)", () => {
+        const sync = (self: ScrollTrigger) =>
+          setActive(Math.min(facts.length - 1, Math.floor(self.progress * facts.length)));
+        sync(
+          ScrollTrigger.create({
+            trigger: root.current,
+            start: "top top",
+            end: "bottom bottom",
+            onUpdate: sync,
+            onRefresh: sync,
+          }),
+        );
+      });
     },
-    { scope: root },
+    { scope: root, dependencies: [facts.length] },
   );
 
   return (
-    <section ref={root} className="bg-background py-(--spacing-section)">
-      <div className="site-container grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-5">
-          <div className="flex flex-col gap-10 lg:sticky lg:top-32">
+    <section
+      ref={root}
+      style={{ "--precision-steps": facts.length } as CSSProperties}
+      className="bg-background py-(--spacing-section) lg:h-[calc(100svh+var(--precision-steps)*60svh)] lg:py-0"
+    >
+      <div className="lg:sticky lg:top-0 lg:flex lg:h-svh lg:items-center">
+        <div className="site-container grid w-full grid-cols-1 gap-16 lg:grid-cols-12 lg:items-center lg:gap-8">
+          <div className="flex flex-col gap-10 lg:col-span-5">
             <span className="text-label text-muted-foreground">{label}</span>
             <RevealText
               as="h2"
@@ -54,50 +62,62 @@ export const PrecisionSection = ({ label, title, facts, visual }: PrecisionSecti
               className="text-display max-w-[12ch] text-[clamp(2.4rem,5vw,5.5rem)]"
             />
             <ol className="flex flex-col">
-              {facts.map((fact, index) => (
-                <li
-                  key={fact.title}
-                  className={cn(
-                    "border-t border-border py-5 transition-opacity duration-700 ease-glide",
-                    index === active ? "opacity-100" : "lg:opacity-35",
-                  )}
-                >
-                  <div className="flex items-baseline gap-5">
-                    <span className="text-label w-6 shrink-0 text-graphite-400">0{index + 1}</span>
-                    <div className="flex flex-col gap-2">
-                      <h3 className="font-display text-xl font-normal tracking-[-0.015em]">
-                        {fact.title}
-                      </h3>
-                      <p className="max-w-[40ch] text-[15px] leading-relaxed text-muted-foreground">
-                        {fact.text}
-                      </p>
+              {facts.map((fact, index) => {
+                const current = index === active;
+                return (
+                  <li
+                    key={fact.title}
+                    aria-current={current}
+                    className={cn(
+                      "border-t border-blue-700/20 py-5 transition-opacity duration-700 ease-glide",
+                      current ? "opacity-100" : "lg:opacity-35",
+                    )}
+                  >
+                    <div className="flex items-baseline gap-5">
+                      <span className="text-label w-6 shrink-0 text-graphite-400">
+                        0{index + 1}
+                      </span>
+                      <div className="flex flex-col">
+                        <h3 className="font-display text-xl font-normal tracking-[-0.015em]">
+                          {fact.title}
+                        </h3>
+                        {/* No desktop só o tópico ativo abre o texto: os quatro abertos não
+                            cabem na altura da tela fixa. */}
+                        <div
+                          className={cn(
+                            "grid transition-[grid-template-rows] duration-700 ease-glide",
+                            current ? "grid-rows-[1fr]" : "grid-rows-[1fr] lg:grid-rows-[0fr]",
+                          )}
+                        >
+                          <p className="max-w-[40ch] overflow-hidden pt-2 text-[15px] leading-relaxed text-muted-foreground">
+                            {fact.text}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </li>
-              ))}
+                    <div className="mt-6 aspect-[4/5] overflow-hidden rounded-[6px] lg:hidden">
+                      <Picture {...fact.photo} sizes={PHOTO_SIZES} />
+                    </div>
+                  </li>
+                );
+              })}
             </ol>
           </div>
-        </div>
 
-        <div className="flex flex-col gap-6 lg:col-span-6 lg:col-start-7 lg:gap-10">
-          {visual}
-          {facts.map((fact, index) => (
-            <div
-              key={fact.title}
-              data-precision-item
-              className={cn(index % 2 === 1 && "lg:pl-[18%]")}
-            >
-              <RevealImage
+          <div className="relative hidden h-[78svh] overflow-hidden rounded-[6px] bg-graphite-100 lg:col-span-6 lg:col-start-7 lg:block">
+            {facts.map((fact, index) => (
+              <Picture
+                key={fact.title}
                 {...fact.photo}
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                frameClassName={cn(
-                  "rounded-[6px]",
-                  index % 2 === 0 ? "aspect-[4/5]" : "aspect-[5/4]",
+                sizes={PHOTO_SIZES}
+                aria-hidden={index !== active}
+                className={cn(
+                  "absolute inset-0 transition-opacity duration-700 ease-swing motion-reduce:transition-none",
+                  index === active ? "opacity-100" : "opacity-0",
                 )}
-                from={index % 2 === 0 ? "bottom" : "center"}
               />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

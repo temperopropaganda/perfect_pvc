@@ -1,13 +1,31 @@
 @layer components {
+  /*
+   * Cada ícone repete o gesto real da esquadria. Nas que têm maçaneta, ela gira primeiro e só
+   * depois a folha se move; ao fechar, a folha volta e a maçaneta desce por último.
+   *
+   * Variáveis por tipo:
+   *   --oi-handle-open  ângulo da maçaneta com a esquadria aberta
+   *   --oi-lead         espera da folha ao abrir (tempo da maçaneta girar)
+   *   --oi-handle-wait  espera da maçaneta ao fechar (tempo da folha voltar)
+   *   --oi-ease-open    curva da abertura: assenta com leve folga nas de giro, desliza nas de correr
+   */
   .opening-icon {
     --oi-frame: currentColor;
     --oi-stroke: 1.75px;
     --oi-gap: 2px;
     --oi-radius: 3px;
     --oi-glass: color-mix(in oklab, currentColor 7%, transparent);
+    --oi-glass-open: var(--oi-glass);
     --oi-handle: currentColor;
     --oi-ease: cubic-bezier(0.65, 0, 0.35, 1);
+    --oi-ease-swing: cubic-bezier(0.25, 1.14, 0.4, 1);
+    --oi-ease-slide: cubic-bezier(0.33, 1, 0.68, 1);
+    --oi-ease-open: var(--oi-ease-swing);
     --oi-duration: 900ms;
+    --oi-handle-duration: 240ms;
+    --oi-handle-open: 0deg;
+    --oi-lead: 0ms;
+    --oi-handle-wait: 0ms;
 
     position: relative;
     display: inline-block;
@@ -59,9 +77,8 @@
     overflow: hidden;
     transform-origin: center;
     transition:
-      transform var(--oi-duration) var(--oi-ease),
-      border-color 400ms ease,
-      filter var(--oi-duration) var(--oi-ease);
+      transform var(--oi-duration) var(--oi-ease) var(--oi-close-delay, 0ms),
+      border-color 400ms ease;
     will-change: transform;
   }
 
@@ -74,30 +91,106 @@
   .oi-pane {
     position: absolute;
     inset: 0;
+    overflow: hidden;
     background: var(--oi-glass);
-    transition: transform var(--oi-duration) var(--oi-ease);
+    transition:
+      transform var(--oi-duration) var(--oi-ease),
+      background-color var(--oi-duration) var(--oi-ease);
   }
 
+  /* Reflexo que atravessa o vidro enquanto a folha se move */
+  .oi-pane::before {
+    content: "";
+    position: absolute;
+    inset: -20% -60%;
+    background: linear-gradient(
+      105deg,
+      transparent 42%,
+      color-mix(in oklab, currentColor 22%, transparent) 50%,
+      transparent 58%
+    );
+    opacity: 0;
+    transform: translateX(-70%);
+    transition:
+      transform calc(var(--oi-duration) * 1.1) var(--oi-ease),
+      opacity 300ms ease;
+  }
+
+  /* Maçaneta: uma alavanca que pende do eixo, para baixo com a esquadria fechada */
   .oi-handle {
+    position: absolute;
+    top: 42%;
+    right: 15%;
     display: none;
+    width: max(1.25px, calc(var(--oi-stroke) * 0.85));
+    height: 26%;
+    border-radius: 999px;
+    background: var(--oi-handle);
+    transform-origin: 50% 0;
+    rotate: 0deg;
+    transition: rotate var(--oi-handle-duration) var(--oi-ease) var(--oi-handle-wait);
   }
 
   .opening-icon[data-variant="window"] .oi-handle {
-    position: absolute;
-    top: 50%;
     right: 7%;
-    display: block;
     width: 5%;
     min-width: 4px;
     height: 14%;
     border-radius: 4px;
-    background: var(--oi-handle);
     box-shadow: 0 2px 6px rgb(0 0 0 / 0.25);
-    transform: translateY(-50%);
+  }
+
+  :is(
+      [data-type="giro"],
+      [data-type="oscilo-batente"],
+      [data-type="maxim-ar"],
+      [data-type="pivotante"]
+    )
+    .oi-handle,
+  :is([data-type="correr"], [data-type="alcante"]) .oi-sash[data-index="1"] .oi-handle {
+    display: block;
   }
 
   /* Estado aberto: prop open, autoplay ou hover/foco no card pai (.group) */
-  /* Correr e alçante: a folha da direita desliza por trás da outra */
+  .opening-icon:is([data-open="true"], .group:hover *, .group:focus-visible *) .oi-sash {
+    transition-timing-function: var(--oi-ease-open);
+    transition-delay: calc(var(--oi-lead) + var(--oi-open-delay, 0ms));
+  }
+
+  .opening-icon:is([data-open="true"], .group:hover *, .group:focus-visible *) .oi-handle {
+    rotate: var(--oi-handle-open);
+    transition-delay: 0ms;
+  }
+
+  /* Só no traço: no variant window o vidro é um gradiente, não uma cor */
+  .opening-icon[data-variant="line"]:is([data-open="true"], .group:hover *, .group:focus-visible *)
+    .oi-pane {
+    background-color: var(--oi-glass-open);
+    transition-delay: var(--oi-lead);
+  }
+
+  .opening-icon:is([data-open="true"], .group:hover *, .group:focus-visible *) .oi-pane::before {
+    opacity: 1;
+    transform: translateX(70%);
+    transition-delay: var(--oi-lead);
+  }
+
+  /* Folhas que giram: o vidro escurece um pouco ao se afastar da luz */
+  :is(
+    [data-type="giro"],
+    [data-type="oscilo-batente"],
+    [data-type="maxim-ar"],
+    [data-type="pivotante"],
+    [data-type="camarao"]
+  ) {
+    --oi-glass-open: color-mix(in oklab, currentColor 16%, transparent);
+  }
+
+  /* Correr: a folha da direita desliza por trás da outra */
+  :is([data-type="correr"], [data-type="alcante"]) {
+    --oi-ease-open: var(--oi-ease-slide);
+  }
+
   :is([data-type="correr"], [data-type="alcante"]) .oi-sash[data-index="0"] {
     right: 47%;
   }
@@ -107,13 +200,11 @@
     z-index: 1;
   }
 
-  :is([data-type="correr"], [data-type="alcante"]) .oi-sash[data-index="0"] .oi-handle {
-    display: none;
-  }
-
   :is([data-type="correr"], [data-type="alcante"]) .oi-sash[data-index="1"] .oi-handle {
+    top: 34%;
     right: auto;
-    left: 7%;
+    left: 16%;
+    height: 32%;
   }
 
   .opening-icon[data-type="correr"]:is([data-open="true"], .group:hover *, .group:focus-visible *)
@@ -121,12 +212,39 @@
     transform: translateX(-86%);
   }
 
-  .opening-icon[data-type="alcante"]:is([data-open="true"], .group:hover *, .group:focus-visible *)
-    .oi-sash[data-index="1"] {
-    transform: translate(-86%, -5%);
+  /* Alçante: a alavanca gira, a folha sobe, desliza e assenta de novo */
+  [data-type="alcante"] {
+    --oi-handle-open: 180deg;
+    --oi-lead: var(--oi-handle-duration);
+    --oi-lift-duration: 260ms;
+    --oi-handle-wait: calc(var(--oi-duration) + var(--oi-lift-duration));
   }
 
-  /* Giro: dobradiça na esquerda */
+  [data-type="alcante"] .oi-sash[data-index="1"] {
+    transition:
+      translate var(--oi-duration) var(--oi-ease) 0ms,
+      transform var(--oi-lift-duration) var(--oi-ease) var(--oi-duration),
+      border-color 400ms ease;
+  }
+
+  .opening-icon[data-type="alcante"]:is([data-open="true"], .group:hover *, .group:focus-visible *)
+    .oi-sash[data-index="1"] {
+    transform: translateY(-6%);
+    translate: -86% 0;
+    transition:
+      transform var(--oi-lift-duration) var(--oi-ease) var(--oi-lead),
+      translate var(--oi-duration) var(--oi-ease-slide)
+        calc(var(--oi-lead) + var(--oi-lift-duration)),
+      border-color 400ms ease;
+  }
+
+  /* Giro: maçaneta na horizontal, folha gira na dobradiça da esquerda */
+  [data-type="giro"] {
+    --oi-handle-open: 90deg;
+    --oi-lead: var(--oi-handle-duration);
+    --oi-handle-wait: var(--oi-duration);
+  }
+
   [data-type="giro"] .oi-sash {
     transform-origin: left center;
   }
@@ -134,10 +252,15 @@
   .opening-icon[data-type="giro"]:is([data-open="true"], .group:hover *, .group:focus-visible *)
     .oi-sash {
     transform: rotateY(-62deg);
-    filter: brightness(0.96);
   }
 
-  /* Oscilo-batente: tomba para ventilar */
+  /* Oscilo-batente: maçaneta para cima, folha tomba pela aresta de baixo */
+  [data-type="oscilo-batente"] {
+    --oi-handle-open: 180deg;
+    --oi-lead: var(--oi-handle-duration);
+    --oi-handle-wait: var(--oi-duration);
+  }
+
   [data-type="oscilo-batente"] .oi-sash {
     transform-origin: center bottom;
   }
@@ -148,12 +271,28 @@
       .group:focus-visible *
     )
     .oi-sash {
-    transform: rotateX(-22deg);
+    transform: rotateX(-24deg);
   }
 
-  /* Maxim-ar: projeta para fora a partir do topo */
+  /* Maxim-ar: alavanca embaixo, folha projeta para fora a partir do topo */
+  [data-type="maxim-ar"] {
+    --oi-handle-open: -90deg;
+    --oi-lead: var(--oi-handle-duration);
+    --oi-handle-wait: var(--oi-duration);
+  }
+
   [data-type="maxim-ar"] .oi-sash {
     transform-origin: center top;
+  }
+
+  [data-type="maxim-ar"] .oi-handle {
+    top: auto;
+    right: auto;
+    bottom: 16%;
+    left: 50%;
+    width: 26%;
+    height: max(1.25px, calc(var(--oi-stroke) * 0.85));
+    transform-origin: 0 50%;
   }
 
   .opening-icon[data-type="maxim-ar"]:is([data-open="true"], .group:hover *, .group:focus-visible *)
@@ -161,9 +300,15 @@
     transform: rotateX(42deg);
   }
 
-  /* Pivotante: gira em torno de um eixo deslocado */
+  /* Pivotante: puxador comprido, folha gira em torno de um eixo deslocado */
   [data-type="pivotante"] .oi-sash {
     transform-origin: 30% center;
+  }
+
+  [data-type="pivotante"] .oi-handle {
+    top: 28%;
+    right: 14%;
+    height: 44%;
   }
 
   .opening-icon[data-type="pivotante"]:is(
@@ -175,16 +320,15 @@
     transform: rotateY(74deg);
   }
 
-  /* Camarão: folhas que dobram para a esquerda */
+  /* Camarão: as folhas dobram em sequência, da dobradiça para a ponta */
   [data-type="camarao"] .oi-sash {
+    --oi-open-delay: calc(var(--i) * 70ms);
+    --oi-close-delay: calc((3 - var(--i)) * 70ms);
+
     left: calc(var(--i) * 25%);
     right: auto;
     width: 25%;
     transform-origin: left center;
-  }
-
-  [data-type="camarao"] .oi-sash .oi-handle {
-    display: none;
   }
 
   .opening-icon[data-type="camarao"]:is([data-open="true"], .group:hover *, .group:focus-visible *)
@@ -207,19 +351,22 @@
     transform: translateX(-222%) rotateY(64deg);
   }
 
-  /* Brise: lâminas que giram */
+  /* Brise: as lâminas giram em onda */
   [data-type="brise"] .oi-sash {
+    --oi-open-delay: calc(var(--i) * 45ms);
+    --oi-close-delay: calc(var(--i) * 45ms);
+
     left: calc(var(--i) * 20% + 2%);
     right: auto;
     width: 16%;
     border-radius: 1px;
   }
 
-  [data-type="brise"] .oi-sash .oi-pane {
-    background: color-mix(in oklab, var(--oi-frame) 35%, transparent);
+  [data-type="brise"] {
+    --oi-glass: color-mix(in oklab, var(--oi-frame) 35%, transparent);
   }
 
-  [data-type="brise"] .oi-sash .oi-handle {
+  [data-type="brise"] .oi-pane::before {
     display: none;
   }
 
@@ -228,26 +375,24 @@
     transform: rotateY(72deg);
   }
 
-  /* Fixo: só um reflexo atravessa o vidro */
-  [data-type="fixo"] .oi-handle {
-    display: none !important;
-  }
-
-  [data-type="fixo"] .oi-pane::after {
-    content: "";
-    position: absolute;
-    inset: -20% -60%;
+  /*
+   * Fixo e tela: não abrem. No hover, só a luz atravessa: um reflexo no vidro do fixo e um
+   * brilho que passa pela trama da tela.
+   */
+  :is([data-type="fixo"], [data-type="tela"]) .oi-pane::before {
+    inset: -20% -80%;
     background: linear-gradient(
       105deg,
-      transparent 40%,
-      color-mix(in oklab, currentColor 30%, transparent) 50%,
-      transparent 60%
+      transparent 38%,
+      color-mix(in oklab, currentColor 34%, transparent) 50%,
+      transparent 62%
     );
-    transform: translateX(-70%);
-    transition: transform 1400ms var(--oi-ease);
+    transition:
+      transform 1400ms var(--oi-ease),
+      opacity 400ms ease;
   }
 
-  .opening-icon[data-variant="window"][data-type="fixo"] .oi-pane::after {
+  .opening-icon[data-variant="window"][data-type="fixo"] .oi-pane::before {
     background: linear-gradient(
       105deg,
       transparent 40%,
@@ -256,27 +401,12 @@
     );
   }
 
-  .opening-icon[data-type="fixo"]:is([data-open="true"], .group:hover *, .group:focus-visible *)
-    .oi-pane::after {
-    transform: translateX(70%);
+  :is([data-type="fixo"], [data-type="tela"]) .oi-pane {
+    transition: background-color 1400ms var(--oi-ease);
   }
 
-  /* Persiana, tela e portão: o painel interno desliza */
-  :is([data-type="persiana"], [data-type="tela"], [data-type="portao"]) .oi-handle {
-    display: none;
-  }
-
-  [data-type="persiana"] .oi-pane {
-    background: repeating-linear-gradient(
-      to bottom,
-      color-mix(in oklab, var(--oi-frame) 55%, transparent) 0 1.5px,
-      transparent 1.5px 4px
-    );
-  }
-
-  .opening-icon[data-type="persiana"]:is([data-open="true"], .group:hover *, .group:focus-visible *)
-    .oi-pane {
-    transform: translateY(-84%);
+  [data-type="fixo"] {
+    --oi-glass-open: color-mix(in oklab, currentColor 12%, transparent);
   }
 
   [data-type="tela"] .oi-pane {
@@ -293,9 +423,27 @@
       );
   }
 
-  .opening-icon[data-type="tela"]:is([data-open="true"], .group:hover *, .group:focus-visible *)
+  /* Persiana e portão: o painel interno sobe e se recolhe no topo */
+  :is([data-type="persiana"], [data-type="portao"]) {
+    --oi-ease-open: var(--oi-ease-slide);
+  }
+
+  :is([data-type="persiana"], [data-type="portao"]) .oi-pane::before {
+    display: none;
+  }
+
+  [data-type="persiana"] .oi-pane {
+    background: repeating-linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--oi-frame) 55%, transparent) 0 1.5px,
+      transparent 1.5px 4px
+    );
+  }
+
+  .opening-icon[data-type="persiana"]:is([data-open="true"], .group:hover *, .group:focus-visible *)
     .oi-pane {
-    transform: translateX(-92%);
+    transform: translateY(-84%);
+    transition-timing-function: var(--oi-ease-slide);
   }
 
   [data-type="portao"] .oi-frame {
@@ -313,12 +461,14 @@
   .opening-icon[data-type="portao"]:is([data-open="true"], .group:hover *, .group:focus-visible *)
     .oi-pane {
     transform: translateY(-88%);
+    transition-timing-function: var(--oi-ease-slide);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .oi-sash,
     .oi-pane,
-    .oi-pane::after {
+    .oi-pane::before,
+    .oi-handle {
       transition: none !important;
     }
   }

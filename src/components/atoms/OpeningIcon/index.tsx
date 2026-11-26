@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { cn } from "@src/lib/utils";
 
@@ -35,7 +35,8 @@ const SASH_COUNT: Partial<Record<OpeningIconType, number>> = {
   brise: 5,
 };
 
-const AUTOPLAY_INTERVAL_MS = 2200;
+// Precisa cobrir o gesto mais longo (alçante: alavanca, subida e deslize, cerca de 1,4 s).
+const AUTOPLAY_INTERVAL_MS = 2400;
 
 // Desenho da esquadria que abre do jeito do sistema: abre no hover do ".group" pai,
 // com a prop open ou sozinho com autoplay.
@@ -48,15 +49,27 @@ export const OpeningIcon = ({
   handleColor,
   className,
 }: OpeningIconProps) => {
+  const root = useRef<HTMLSpanElement>(null);
   const [autoOpen, setAutoOpen] = useState(false);
 
+  // O autoplay só roda com o ícone na tela; fora dela, para e volta fechado.
   useEffect(() => {
-    if (!autoplay) return undefined;
-    const timer = window.setInterval(
-      () => setAutoOpen((current) => !current),
-      AUTOPLAY_INTERVAL_MS,
-    );
-    return () => window.clearInterval(timer);
+    const element = root.current;
+    if (!autoplay || !element) return undefined;
+    let timer = 0;
+    const observer = new IntersectionObserver(([entry]) => {
+      window.clearInterval(timer);
+      if (!entry?.isIntersecting) {
+        setAutoOpen(false);
+        return;
+      }
+      timer = window.setInterval(() => setAutoOpen((current) => !current), AUTOPLAY_INTERVAL_MS);
+    });
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      window.clearInterval(timer);
+    };
   }, [autoplay]);
 
   const sashes = Array.from({ length: SASH_COUNT[type] ?? 1 }, (_, index) => index);
@@ -67,6 +80,7 @@ export const OpeningIcon = ({
 
   return (
     <span
+      ref={root}
       aria-hidden="true"
       className={cn("opening-icon", className)}
       data-type={type}
